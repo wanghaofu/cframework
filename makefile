@@ -12,8 +12,8 @@ OBJ = $(patsubst %.cpp,${DIR_OBJ}/%.o,$(notdir ${SRC}))
 SERVER_TARGET = server_main
 CLIENT_TARGET = client_main
 
-SERVER_OBJ=$(filter-out ./obj/simple_client_main.o,$(OBJ))
-CLIENT_OBJ=$(filter-out ./obj/simple_server_main.o,$(OBJ))
+SERVER_OBJ=$(filter-out ./obj/client_main.o,$(OBJ))
+CLIENT_OBJ=$(filter-out ./obj/server_main.o,$(OBJ))
 
 $(warning $(SERVER_OBJ))
 $(warning $(CLIENT_OBJ))
