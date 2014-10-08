@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+ClientSocket	ClientSocket.h	/^class ClientSocket : private Socket$/;"	c
+ClientSocket	clientSocket.cpp	/^ClientSocket::ClientSocket ( std::string host, int port )$/;"	f	class:ClientSocket
+ClientSocket_class	ClientSocket.h	4;"	d
+MAXCONNECTIONS	Socket.h	/^const int MAXCONNECTIONS = 5;$/;"	v
+MAXHOSTNAME	Socket.h	/^const int MAXHOSTNAME = 200;$/;"	v
+MAXRECV	Socket.h	/^const int MAXRECV = 500;$/;"	v
+ServerSocket	ServerSocket.h	/^		ServerSocket (){};$/;"	f	class:ServerSocket
+ServerSocket	ServerSocket.h	/^class ServerSocket : private Socket$/;"	c
+ServerSocket_class	ServerSocket.h	4;"	d
+Socket	Socket.cpp	/^Socket::Socket() :$/;"	f	class:Socket
+Socket	Socket.h	/^class Socket$/;"	c
+SocketException	SocketException.h	/^		SocketException ( std::string s ) : m_s ( s ) {};$/;"	f	class:SocketException
+SocketException	SocketException.h	/^class SocketException$/;"	c
+SocketException_class	SocketException.h	2;"	d
+Socket_class	Socket.h	4;"	d
+accept	Socket.cpp	/^bool Socket::accept ( Socket& new_socket ) const$/;"	f	class:Socket
+bind	Socket.cpp	/^bool Socket::bind ( const int port )$/;"	f	class:Socket
+connect	Socket.cpp	/^bool Socket::connect ( const std::string host, const int port )$/;"	f	class:Socket
+create	Socket.cpp	/^bool Socket::create()$/;"	f	class:Socket
+description	SocketException.h	/^		std::string description() { return m_s; }$/;"	f	class:SocketException
+is_valid	Socket.h	/^		bool is_valid() const { return m_sock != -1; }$/;"	f	class:Socket
+listen	Socket.cpp	/^bool Socket::listen() const$/;"	f	class:Socket
+m_addr	Socket.h	/^		sockaddr_in m_addr;$/;"	m	class:Socket
+m_s	SocketException.h	/^		std::string m_s;$/;"	m	class:SocketException
+m_sock	Socket.h	/^		int m_sock;$/;"	m	class:Socket
+main	simple_client_main.cpp	/^int main ( int argc, int argv[] )$/;"	f
+main	simple_server_main.cpp	/^int main ( int argc, int argv[] )$/;"	f
+operator <<	clientSocket.cpp	/^const ClientSocket& ClientSocket::operator << ( const std::string& s ) const$/;"	f	class:ClientSocket
+operator >>	clientSocket.cpp	/^const ClientSocket& ClientSocket::operator >> ( std::string& s ) const$/;"	f	class:ClientSocket
+recv	Socket.cpp	/^int Socket::recv ( std::string& s ) const$/;"	f	class:Socket
+send	Socket.cpp	/^bool Socket::send ( const std::string s ) const$/;"	f	class:Socket
+set_non_blocking	Socket.cpp	/^void Socket::set_non_blocking ( const bool b )$/;"	f	class:Socket
+simple_client_objects	Makefile	/^simple_client_objects = ClientSocket.o Socket.o simple_client_main.o$/;"	m
+simple_server_objects	Makefile	/^simple_server_objects = ServerSocket.o Socket.o simple_server_main.o$/;"	m
+~ClientSocket	ClientSocket.h	/^			  virtual ~ClientSocket(){};$/;"	f	class:ClientSocket
+~Socket	Socket.cpp	/^Socket::~Socket()$/;"	f	class:Socket
+~SocketException	SocketException.h	/^		~SocketException (){};$/;"	f	class:SocketException
