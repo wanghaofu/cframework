@@ -115,8 +115,36 @@ bool Socket::send ( const std::string s ) const
 		return true;
 	}
 }
+// Data Transmission
+bool Socket::send(Socket& socket,const std::string& message) const
+{
+    int result=::send(socket.m_sockfd,message.c_str(),message.length(),MSG_NOSIGNAL);
+    if(result==-1)
+        return false;
+    return true;
+}
 
+int Socket::receive(Socket& socket,std::string& message) const
+{
+    char buffer[MAXRECEIVE+1];
+    message.clear();
+    memset(buffer,0,MAXRECEIVE+1);
 
+    int numberRead=::recv(socket.m_sockfd,buffer,MAXRECEIVE,0);
+    if(numberRead==-1)
+    {
+        std::cout<<"error in Socket::Receive\n";
+        return 0;
+    }
+    else if(numberRead==0)
+        return 0;
+    else
+    {
+        message=buffer;
+        return numberRead;
+    }
+
+}
 int Socket::recv ( std::string& s ) const
 {
 
