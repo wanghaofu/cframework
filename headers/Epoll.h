@@ -5,7 +5,7 @@
 #include <sys/epoll.h>
 #include <sys/resource.h>
 
-const int MAXEPOLLSIZE=MAXCONNECTION+5;
+const int MAXEPOLLSIZE=MAXCONNECTIONS+5;
 
 class Epoll
 {
