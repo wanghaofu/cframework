@@ -36,7 +36,7 @@ class Socket
 		bool send ( const std::string ) const;
 		int recv ( std::string& ) const;
 
-        bool Socket::Send(Socket& socket,const std::string& message) const
+        bool Socket::Send(Socket& socket,const std::string& message) const;
 		int Socket::Receive(Socket& socket,std::string& message)const;
 
 
