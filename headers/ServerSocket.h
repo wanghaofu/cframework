@@ -24,7 +24,7 @@ class ServerSocket : public Socket
 		void accept ( ServerSocket& );
 
 		void Run();
-		void RecvFile(Socket* clientSocket)
+		void RecvFile(Socket* clientSocket);
 	private:
 		//accept multi-clients
 		bool Accept();
