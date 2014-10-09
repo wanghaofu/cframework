@@ -6,7 +6,7 @@
 #include "Socket.h"
 #include "comm.h"
 
-class ClientSocket : private Socket
+class ClientSocket : public Socket
 {
   public:
 
@@ -15,7 +15,7 @@ class ClientSocket : private Socket
 
     const ClientSocket& operator << ( const std::string& ) const;
     const ClientSocket& operator >> ( std::string&  ) const;
-    void SendFile(const std::string& fileName)
+    void SendFile(const std::string& fileName);
 };
 
 
