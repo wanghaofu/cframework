@@ -36,8 +36,8 @@ class Socket
 		bool send ( const std::string ) const;
 		int recv ( std::string& ) const;
 
-        bool Send(Socket& socket,const std::string& message) const;
-		int Receive(Socket& socket,std::string& message)const;
+        bool send(Socket& socket,const std::string& message) const;
+		int receive(Socket& socket,std::string& message)const;
 
 
 		void set_non_blocking ( const bool );
