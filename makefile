@@ -21,7 +21,7 @@ $(warning $(CLIENT_OBJ))
 BIN_SERVER_TARGET = ${DIR_BIN}/${SERVER_TARGET}
 BIN_CLIENT_TARGET = ${DIR_BIN}/${CLIENT_TARGET}
 
-CC = g++
+CC = g++ -lpthread -lcrypto
 CFLAGS = -g -Wall -I${DIR_INC}
 
 ALL : $(BIN_SERVER_TARGET) $(BIN_CLIENT_TARGET)

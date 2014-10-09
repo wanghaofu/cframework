@@ -4,12 +4,17 @@
 #define ServerSocket_class
 
 #include "Socket.h"
+#include <list>
+#include <semaphore.h>
+#include "ThreadReadWriteLock.h"
 
-class ServerSocket : private Socket
+using std::list;
+
+class ServerSocket : public Socket
 {
 	public:
 
-		ServerSocket ( int port );
+		ServerSocket (const int port );
 		ServerSocket (){};
 		virtual ~ServerSocket();
 
@@ -17,6 +22,21 @@ class ServerSocket : private Socket
 		const ServerSocket& operator >> ( std::string& ) const;
 
 		void accept ( ServerSocket& );
+
+		void Run();
+		void RecvFile(Socket* clientSocket)
+	private:
+		//accept multi-clients
+		bool Accept();
+		void AddClient(Socket* clientSocket);
+		static void DeleteClient(Socket* clientSocket);
+		static void* ProcessMessage(void* arg);
+		static void SendMsgToAllUsers(const std::string& message);
+
+		static list<Socket*> clientSockets;
+		static bool serviceFlag;
+
+		static ThreadReadWriteLock readWriteLock;
 
 };
 

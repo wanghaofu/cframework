@@ -41,4 +41,22 @@ const ClientSocket& ClientSocket::operator >> ( std::string&  s ) const
 	return *this;
 }
 
+void ClientSocket::SendFile(const std::string& fileName)
+{
+    FileOperator fileOperator;
+    fileOperator.Open(fileName.c_str(),"rb");
+    std::string buffer;
 
+    int readBytes;
+    Send("File");
+
+    while((readBytes = fileOperator.ReadFromFile(buffer))>0)
+    {
+        if(Send(buffer)<0)
+        {
+            perror("failed to send file");
+            break;
+        }
+    }
+
+}

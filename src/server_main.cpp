@@ -5,45 +5,33 @@
 #include <cstdlib>
 using namespace std;
 int main ( int argc, char ** )
-
-
 {
-//  message data={1,"body"};
-  std::cout << "running....\n";
-
-
-  try
-  {
-    // Create the socket
-    ServerSocket server ( 3000 );
-    //HttpClient vote (50000);
-    while ( true )
+   cout<<"Running server..."<<endl;
+    try
     {
-      ServerSocket new_sock;
-      //HttpClient new_client;
-      server.accept ( new_sock );
-      //vote.accept (new_client);
+        ServerSocket server(8080);
 
-      try
-      {
-        while ( true )
+        while(true)
         {
-          std::string data;
-          data="this is server test";
-          new_sock >> data;
-//          cout << "client message is :" << &data << endl;
-          new_sock << data ;
-        }
-      }
-      catch ( SocketException& ) {}
-    }
-  }
-  catch ( SocketException& e )
-  {
-    std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
-  }
+            Socket newSocket;
+            server.Accept(newSocket);
 
-  return 0;
+            try
+            {
+                string message;
+                server.Receive(newSocket,message);
+                cout<<"Receive message: "<<message<<endl;
+                message="Here is server";
+                server.Send(newSocket,message);
+            }
+            catch(SocketException&){}
+        }
+    }
+    catch(SocketException& ex)
+    {
+         cout << "Exception was caught:" << ex.Description() << "\nExiting.\n";
+    }
+    return 0;
 }
 
 

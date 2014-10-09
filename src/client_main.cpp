@@ -10,7 +10,7 @@ int main( int argc, char **)
 {
   try
   {
-       ClientSocket client_socket ( "localhost", 3000 );
+       ClientSocket client_socket ( "localhost", 8080 );
 
  //   HttpClient vote( "127.0.0.1",80);
     string reply;
@@ -57,6 +57,22 @@ int main( int argc, char **)
   }
 
   return 0;
+
+  /** cout<<"Running client...."<<endl;
+    try
+    {
+        ClientSocket clientSocket("127.0.0.1",8080);
+        clientSocket.Send("Hello,here is client");
+        string message;
+        clientSocket.Receive(message);
+        cout<<"Response from server: "<<message<<endl;
+    }
+    catch(SocketException& ex)
+    {
+        cout << "Exception was caught:" << ex.Description() << "\n";
+    }
+    return 0;
+    **/
 }
 
 
