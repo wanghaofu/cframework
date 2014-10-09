@@ -184,4 +184,6 @@ void Socket::set_non_blocking ( const bool b )
 
 }
 
-
+int Socket::GetSocketfd(){
+	return m_sock;
+}

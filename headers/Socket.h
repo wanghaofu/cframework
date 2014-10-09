@@ -40,6 +40,7 @@ class Socket
 		void set_non_blocking ( const bool );
 
 		bool is_valid() const { return m_sock != -1; }
+		int GetSocketfd();
 
 	private:
 

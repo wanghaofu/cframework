@@ -8,23 +8,23 @@
 
 EpollServerSocket::EpollServerSocket(const int port)
 {
-      if ( ! Socket::Create() )
+      if ( ! Socket::create() )
         {
           throw SocketException ( "Could not create server socket." );
         }
 
-      if ( ! Socket::Bind ( port ) )
+      if ( ! Socket::bind ( port ) )
         {
           throw SocketException ( "Could not bind to port." );
         }
 
-      if ( ! Socket::Listen() )
+      if ( ! Socket::listen() )
         {
           throw SocketException ( "Could not listen to socket." );
         }
 
       //set listener socket non-blocking!!
-      Socket::SetNonBlocking(true);
+      Socket::set_non_blocking(true);
 
 }
 
@@ -102,11 +102,11 @@ void EpollServerSocket::ProcessMessage(Socket& clientSocket)
 
 bool EpollServerSocket::AddNewClient(Socket& clientSocket)
 {
-    if(Socket::Accept(clientSocket)==false)
+    if(Socket::accept(clientSocket)==false)
         return false;
 
     //set socket non-blocking!!
-    clientSocket.SetNonBlocking(true);
+    clientSocket.set_non_blocking(true);
 
     if(epoll.Add(clientSocket.GetSocketfd(),EPOLLIN | EPOLLET)==false)
         return false;
@@ -138,7 +138,7 @@ void EpollServerSocket::SendMessage(Socket& clientSocket,const std::string& mess
 {
     while(true)
     {
-        if(Socket::Send(clientSocket,message)==false)
+        if(Socket::send(clientSocket,message)==false)
         {
             //this means the socket can be wrote
             if(errno == EINTR)
@@ -163,7 +163,7 @@ void EpollServerSocket::ReceiveMessage(Socket& clientSocket,std::string& message
 
     while(done)
     {
-        int receiveNumber=Socket::Receive(clientSocket,message);
+        int receiveNumber=Socket::receive(clientSocket,message);
         if(receiveNumber==-1)
         {
             //if errno == EAGAIN, that means we have read all data.
@@ -182,7 +182,7 @@ void EpollServerSocket::ReceiveMessage(Socket& clientSocket,std::string& message
 
         //if receiveNumber is equal to MAXRECEIVE,
         //maybe there is data still in cache,so it has to read again
-        if(receiveNumber==MAXRECEIVE)
+        if(receiveNumber==MAXRECV)
             done=true;
         else
             done=false;
