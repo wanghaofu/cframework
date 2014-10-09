@@ -49,11 +49,11 @@ void ClientSocket::SendFile(const std::string& fileName)
     std::string buffer;
 
     int readBytes;
-    Send("File");
+    send("File");
 
     while((readBytes = fileOperator.ReadFromFile(buffer))>0)
     {
-        if(Send(buffer)<0)
+        if(send(buffer)<0)
         {
             perror("failed to send file");
             break;
