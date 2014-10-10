@@ -3,6 +3,7 @@
 #include "ServerSocket.h"
 #include "SocketException.h"
 #include "FileOperator.h"
+#include "ThreadReadWriteLock.h"
 #include <string>
 #include <list>
 #include <semaphore.h>
@@ -11,7 +12,6 @@
 list<Socket*> ServerSocket::clientSockets;
 ThreadReadWriteLock ServerSocket::readWriteLock;
 bool ServerSocket::serviceFlag=true;
-
 
 ServerSocket::ServerSocket ( const int port )
 {
