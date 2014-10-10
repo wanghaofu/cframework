@@ -118,11 +118,13 @@ bool Socket::send ( const std::string s ) const
 // Data Transmission
 bool Socket::send(Socket& socket,const std::string& message) const
 {
-    int result=::send(socket.m_sockfd,message.c_str(),message.length(),MSG_NOSIGNAL);
+	//?? ??!! 发送消息的方法貌似有问题！ 直接发送！ 这个send方法是哪里来的 是本地方法吗
+    int result=::send(socket.m_sock,message.c_str(),message.length(),MSG_NOSIGNAL);
     if(result==-1)
         return false;
     return true;
 }
+
 
 int Socket::receive(Socket& socket,std::string& message) const
 {
@@ -130,7 +132,7 @@ int Socket::receive(Socket& socket,std::string& message) const
     message.clear();
     memset(buffer,0,MAXRECEIVE+1);
 
-    int numberRead=::recv(socket.m_sockfd,buffer,MAXRECEIVE,0);
+    int numberRead=::recv(socket.m_sock,buffer,MAXRECEIVE,0);
     if(numberRead==-1)
     {
         std::cout<<"error in Socket::Receive\n";
@@ -145,6 +147,7 @@ int Socket::receive(Socket& socket,std::string& message) const
     }
 
 }
+
 int Socket::recv ( std::string& s ) const
 {
 
@@ -196,7 +199,7 @@ void Socket::set_non_blocking ( const bool b )
 
 	int opts;
 
-	opts = fcntl ( m_sock,F_GETFL );
+	opts = fcntl ( m_sock,F_GETFL );g
 
 	if ( opts < 0 )
 	{
@@ -212,6 +215,6 @@ void Socket::set_non_blocking ( const bool b )
 
 }
 
-int Socket::GetSocketfd(){
+int Socket::getSocketfd(){
 	return m_sock;
 }

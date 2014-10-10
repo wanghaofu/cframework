@@ -17,16 +17,19 @@ class EpollServerSocket:public Socket
         //when using the EPOLLET flag,
         //need to continuously read/write a file descriptor until EAGAIN,
         //so we write these two functions for read/write
-        void SendMessage(Socket& clientSocket,const std::string& message) const;
-        void ReceiveMessage(Socket& clientSocket,std::string& message);
+        void sendMessage(Socket& clientSocket,const std::string& message) const;
+        void receiveMessage(Socket& clientSocket,std::string& message);
 
-        void ProcessMessage(Socket& clientSocket);
-        void SendToAllUsers(const std::string& message) const;
+        void processMessage(Socket& clientSocket);
+        void sendToAllUsers(const std::string& message) const;
         //add event to epoll
-        bool AddNewClient(Socket& clientSocket);
+        bool addNewClient(Socket& clientSocket);
         //delete client from map clientSockets
-        void DeleteClient(int sockfd);
+        void deleteClient(int sockfd);
+
+        //map 用于存储链接队列 very good
         std::map<int,Socket*> clientSockets;
+        
         Epoll epoll;
 };
 

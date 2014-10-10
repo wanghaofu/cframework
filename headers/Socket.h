@@ -36,14 +36,15 @@ class Socket
 		bool send ( const std::string ) const;
 		int recv ( std::string& ) const;
 
-        bool Send(Socket& socket,const std::string& message) const;
-		int Receive(Socket& socket,std::string& message)const;
+        //!!! change
+        bool send(Socket& socket,const std::string& message) const;
+		int receive(Socket& socket,std::string& message)const;
 
 
 		void set_non_blocking ( const bool );
 
 		bool is_valid() const { return m_sock != -1; }
-		int GetSocketfd();
+		int getSocketfd();
 
 	private:
 

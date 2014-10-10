@@ -10,7 +10,7 @@ const int MAXEPOLLSIZE=MAXCONNECTIONS+5;
 class Epoll
 {
     public:
-        Epoll();
+        epoll();
         bool Add(int fd,int eventsOption);
         //Returns the number of triggered events
         int Wait();
@@ -21,8 +21,8 @@ class Epoll
     private:
         int epollfd;
         int fdNumber;
-        struct epoll_event event;
-        struct epoll_event events[MAXEPOLLSIZE];
+        struct epoll_event event;  
+        struct epoll_event events[MAXEPOLLSIZE];  //events ! 多个是个数组存储客户端连接
         struct rlimit rt;
 };
 

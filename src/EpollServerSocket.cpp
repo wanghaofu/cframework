@@ -5,8 +5,10 @@
 #include <stdio.h>
 
 #define DEBUG
-
-EpollServerSocket::EpollServerSocket(const int port)
+/**
+创建链接 利用
+**/
+EpollServerSocket::epollServerSocket(const int port)
 {
       if ( ! Socket::create() )
         {
@@ -28,14 +30,18 @@ EpollServerSocket::EpollServerSocket(const int port)
 
 }
 
-EpollServerSocket::~EpollServerSocket()
+EpollServerSocket::~epollServerSocket()
 {
     std::map<int,Socket*>::iterator it;
     for(it=clientSockets.begin();it!=clientSockets.end();it++)
         delete it->second;
 }
+/**
+重点
+入口方法？！
 
-void EpollServerSocket::Run()
+**/
+void EpollServerSocket::run()
 {
     //add listener socketfd to epoll
     if(epoll.Add(Socket::GetSocketfd(),EPOLLIN)==false)
@@ -66,13 +72,14 @@ void EpollServerSocket::Run()
                       continue;
             }
 
-            //if event is triggered by listener socket
+            //if event is triggered by listener socket what is this
             else if(epoll.GetEventOccurfd(i)==Socket::GetSocketfd())
             {
                 clientSocket=new Socket();
                 if(AddNewClient(*clientSocket)==false)
                     return;
-                clientSockets[clientSocket->GetSocketfd()]=clientSocket;
+                //获取链接！ ？ why 一个单独的socket来 负责一个客户！ 
+                clientSockets[clientSocket->getSocketfd()]=clientSocket;
 
             }
             //else event is triggered by client sockets
@@ -85,7 +92,11 @@ void EpollServerSocket::Run()
     }
 }
 
-void EpollServerSocket::ProcessMessage(Socket& clientSocket)
+/**
+?? 用成员方法发送信息
+！clientSockets! 是哪里来的！ 传递过来的某一个用户连接！ 这个是针对多个用户的所以保持了多个连接
+**/
+void EpollServerSocket::processMessage(Socket& clientSocket)
 {
     std::string message;
     ReceiveMessage(clientSocket,message);
@@ -97,10 +108,16 @@ void EpollServerSocket::ProcessMessage(Socket& clientSocket)
         DeleteClient(clientSocket.GetSocketfd());
     }
     else
+    {
+        //可以发送给单个用户！ 这个以来与信息包的进一步扩展。client list 进行重构
         SendToAllUsers(message);
+    }  
 }
 
-bool EpollServerSocket::AddNewClient(Socket& clientSocket)
+/**
+将连接加入epoll  events 列表
+**/
+bool EpollServerSocket::addNewClient(Socket& clientSocket)
 {
     if(Socket::accept(clientSocket)==false)
         return false;
@@ -118,23 +135,27 @@ bool EpollServerSocket::AddNewClient(Socket& clientSocket)
     return true;
 }
 
-void EpollServerSocket::DeleteClient(int sockfd)
+/**
+从epoll events 删除
+**/
+void EpollServerSocket::deleteClient(int sockfd)
 {
     //epoll doesn't need to handle events from sockfd anymore
+
     epoll.Delete(sockfd);
 
     delete clientSockets[sockfd];
-    clientSockets.erase(sockfd);
+    clientSockets.erase(sockfd);   /定义erase没有声明
 }
-
-void EpollServerSocket::SendToAllUsers(const std::string& message) const
+//向所有连接发送信息
+void EpollServerSocket::sendToAllUsers(const std::string& message) const
 {
     std::map<int,Socket*>::const_iterator it;
     for(it=clientSockets.begin();it!=clientSockets.end();it++)
         SendMessage(*(it->second),message);
 }
-
-void EpollServerSocket::SendMessage(Socket& clientSocket,const std::string& message) const
+//发送信息
+void EpollServerSocket::sendMessage(Socket& clientSocket,const std::string& message) const
 {
     while(true)
     {
@@ -156,14 +177,19 @@ void EpollServerSocket::SendMessage(Socket& clientSocket,const std::string& mess
         return;
     }
 }
+/**
+接受信息！？ 
+clientSocket ?! 接受某个特定链接的信息
+message  具体的信息体
 
+**/
 void EpollServerSocket::ReceiveMessage(Socket& clientSocket,std::string& message)
 {
     bool done=true;
 
     while(done)
     {
-        int receiveNumber=Socket::recv(message);
+        int receiveNumber=Socket::receive(clientSocket,message); //调用父类的发送方法给接受该连接的信息到message
         if(receiveNumber==-1)
         {
             //if errno == EAGAIN, that means we have read all data.

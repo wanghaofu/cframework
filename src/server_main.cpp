@@ -6,7 +6,39 @@
 using namespace std;
 int main ( int argc, char ** )
 {
-   cout<<"Running server..."<<endl;
+
+    try
+    {
+      // Create the socket
+      ServerSocket server ( 30000 );
+
+      while ( true )
+    {
+
+      ServerSocket new_sock;
+      server.accept ( new_sock );
+
+      try
+        {
+          while ( true )
+        {
+          std::string data;
+          new_sock >> data;
+          new_sock << data;
+        }
+        }
+      catch ( SocketException& ) {}
+
+    }
+    }
+  catch ( SocketException& e )
+    {
+      std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
+    }
+
+  return 0;
+  
+  /** cout<<"Running server..."<<endl;
    try
     {
         ServerSocket server(8080);
@@ -32,6 +64,7 @@ int main ( int argc, char ** )
          cout << "Exception was caught:" << ex.Description() << "\nExiting.\n";
     }
     return 0;
+    **/
 }
 
 
