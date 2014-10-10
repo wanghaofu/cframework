@@ -45,7 +45,7 @@ bool Socket::create()
 
 bool Socket::bind ( const int port )
 {
-
+	port = port;
 	if ( ! is_valid() )
 	{
 		return false;

@@ -46,9 +46,17 @@ class Socket
 		bool is_valid() const { return m_sock != -1; }
 		int getSocketfd();
 		void erase(int sockfd);
+
+		int getPort();
+		int getAddress();
+
+
 	private:
 
 		int m_sock;
+		int port；
+		String address;
+
 		sockaddr_in m_addr;
 };
 

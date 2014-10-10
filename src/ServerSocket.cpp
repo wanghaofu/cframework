@@ -1,7 +1,8 @@
 // Implementation of the ServerSocket class
-
+#include <errno.h>
 #include "ServerSocket.h"
 #include "SocketException.h"
+#include "FileOperator.h"
 #include "comm.h"
 
 ServerSocket::ServerSocket ( const int port )
@@ -58,10 +59,10 @@ void ServerSocket::accept ( ServerSocket& sock )
 /**
 支持epoll的版本
 **/
-bool ServerSocket::Accept()
+bool ServerSocket::accept()
 {
     Socket* clientSocket=new Socket;
-    Accept(*clientSocket);
+    accept(*clientSocket);
     AddClient(clientSocket);
 
     //create new thread for a new client
