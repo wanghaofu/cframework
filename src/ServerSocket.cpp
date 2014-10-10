@@ -8,6 +8,11 @@
 #include <semaphore.h>
 #include "comm.h"
 
+list<Socket*> ServerSocket::clientSockets;
+ThreadReadWriteLock ServerSocket::readWriteLock;
+bool ServerSocket::serviceFlag=true;
+
+
 ServerSocket::ServerSocket ( const int port )
 {
     
