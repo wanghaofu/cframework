@@ -8,7 +8,7 @@
 /**
 创建链接 利用
 **/
-EpollServerSocket::epollServerSocket(const int port)
+EpollServerSocket::EpollServerSocket(const int port)
 {
       if ( ! Socket::create() )
         {
@@ -30,7 +30,7 @@ EpollServerSocket::epollServerSocket(const int port)
 
 }
 
-EpollServerSocket::~epollServerSocket()
+EpollServerSocket::~EpollServerSocket()
 {
     std::map<int,Socket*>::iterator it;
     for(it=clientSockets.begin();it!=clientSockets.end();it++)
@@ -68,7 +68,7 @@ void EpollServerSocket::run()
                       /* An error has occured on this fd, or the socket is not
                          ready for reading (why were we notified then?) */
                       perror ("epoll error\n");
-                      DeleteClient(epoll.GetEventOccurfd(i));
+                      deleteClient(epoll.GetEventOccurfd(i));
                       continue;
             }
 
@@ -76,7 +76,7 @@ void EpollServerSocket::run()
             else if(epoll.GetEventOccurfd(i)==Socket::GetSocketfd())
             {
                 clientSocket=new Socket();
-                if(AddNewClient(*clientSocket)==false)
+                if(addNewClient(*clientSocket)==false)
                     return;
                 //获取链接！ ？ why 一个单独的socket来 负责一个客户！ 
                 clientSockets[clientSocket->getSocketfd()]=clientSocket;
@@ -86,7 +86,7 @@ void EpollServerSocket::run()
             else
             {
                 clientSocket=clientSockets[epoll.GetEventOccurfd(i)];
-                ProcessMessage(*clientSocket);
+                processMessage(*clientSocket);
             }
         }
     }
@@ -103,9 +103,9 @@ void EpollServerSocket::processMessage(Socket& clientSocket)
 
     if(message=="exit")
     {
-        SendMessage(clientSocket,"user_exit");
+        sendMessage(clientSocket,"user_exit");
 
-        DeleteClient(clientSocket.GetSocketfd());
+        deleteClient(clientSocket.GetSocketfd());
     }
     else
     {
@@ -153,9 +153,9 @@ void EpollServerSocket::sendToAllUsers(const std::string& message) const
 {
     std::map<int,Socket*>::const_iterator it;
     for(it=clientSockets.begin();it!=clientSockets.end();it++)
-        SendMessage(*(it->second),message);
+        sendMessage(*(it->second),message);
 }
-//发送信息
+//发送信息ReceiveMessage
 void EpollServerSocket::sendMessage(Socket& clientSocket,const std::string& message) const
 {
     while(true)
@@ -184,7 +184,7 @@ clientSocket ?! 接受某个特定链接的信息
 message  具体的信息体
 
 **/
-void EpollServerSocket::ReceiveMessage(Socket& clientSocket,std::string& message)
+void EpollServerSocket::receiveMessage(Socket& clientSocket,std::string& message)
 {
     bool done=true;
 
@@ -197,14 +197,14 @@ void EpollServerSocket::ReceiveMessage(Socket& clientSocket,std::string& message
             if (errno != EAGAIN)
             {
                 perror ("ReceiveMessage error");
-                DeleteClient(clientSocket.GetSocketfd());
+                deleteClient(clientSocket.GetSocketfd());
             }
             return;
         }
         else if(receiveNumber==0)
         {
             // End of file. The remote has closed the connection.
-            DeleteClient(clientSocket.GetSocketfd());
+            deleteClient(clientSocket.GetSocketfd());
         }
 
         //if receiveNumber is equal to MAXRECEIVE,

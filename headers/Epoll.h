@@ -10,7 +10,7 @@ const int MAXEPOLLSIZE=MAXCONNECTIONS+5;
 class Epoll
 {
     public:
-        epoll();
+        Epoll();
         bool Add(int fd,int eventsOption);
         //Returns the number of triggered events
         int Wait();
