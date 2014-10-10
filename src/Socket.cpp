@@ -46,7 +46,7 @@ bool Socket::create()
 
 bool Socket::bind ( const int port )
 {
-	port = port;
+	this.port = port;
 	if ( ! is_valid() )
 	{
 		return false;
@@ -133,7 +133,7 @@ int Socket::receive(Socket& socket,std::string& message) const
     message.clear();
     memset(buffer,0,MAXRECV+1);
 
-    int numberRead=::recv(socket.m_sock,buffer,MAXRECEIVE,0);
+    int numberRead=::recv(socket.m_sock,buffer,MAXRECV,0);
     if(numberRead==-1)
     {
         std::cout<<"error in Socket::Receive\n";
