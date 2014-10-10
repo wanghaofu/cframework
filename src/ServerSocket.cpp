@@ -70,7 +70,7 @@ bool ServerSocket::accept()
 
     //create new thread for a new client
     pthread_t newThread;
-    int result=pthread_create(&newThread,NULL,ProcessMessage,static_cast<void*>(clientSocket));
+    int result=pthread_create(&newThread,NULL,processMessage,static_cast<void*>(clientSocket));
     if(result!=0)
         return false;
 
@@ -87,14 +87,14 @@ void ServerSocket::run()
 {
     while(serviceFlag)
     {
-        if(clientSockets.size()>=static_cast<unsigned int>(MAXCONNECTION))
+        if(clientSockets.size()>=static_cast<unsigned int>(MAXCONNECTIONS))
             serviceFlag=false;
         else
-            serviceFlag=Accept();
+            serviceFlag=accept();
         sleep(1);
     }
 }
-static void ServerSocket::sendMsgToAllUsers(const std::string& message)
+void ServerSocket::sendMsgToAllUsers(const std::string& message)
 {
 
 }
@@ -107,7 +107,7 @@ void* ServerSocket::processMessage(void* arg)
 
     while(serviceFlag)
     {
-        Receive(*clientSocket,message);
+        receive(*clientSocket,message);
         if(message=="exit")
         {
             send(*clientSocket,"user_exit");
@@ -130,7 +130,7 @@ void ServerSocket::AddClient(Socket* socket)
         clientSockets.push_back(socket);
 
         std::cout<<"Now "<<clientSockets.size()<<" users..";
-        std::cout<<"New User: "<<socket->GetAddress()<<" "<<socket->GetPort()<<"\n";
+        std::cout<<"New User: "<<socket->getAddress()<<" "<<socket->getPort()<<"\n";
 
         readWriteLock.UnLock();
     }
@@ -144,8 +144,8 @@ void ServerSocket::DeleteClient(Socket* socket)
     {
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
-            if((*iter)->GetAddress()==socket->GetAddress()
-               && (*iter)->GetPort()==socket->GetPort())
+            if((*iter)->getAddress()==socket->getAddress()
+               && (*iter)->getPort()==socket->getPort())
             {
                 //delete socket* in list
                 delete (*iter);
@@ -169,7 +169,7 @@ void ServerSocket::RecvFile(Socket* clientSocket)
     int recvBytes;
     int writeBytes;
 
-    while((recvBytes=Socket::Receive(*clientSocket,message))>0)
+    while((recvBytes=Socket::receive(*clientSocket,message))>0)
     {
         std::cout<<"message length: "<<message.size()<<"\n";
         writeBytes=fileOperator.WriteToFile(message);
