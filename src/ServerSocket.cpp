@@ -101,16 +101,20 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
 void* ServerSocket::processMessage(void* arg)
 {
     std::string message;
+    std::string sysMsg[2]={"Welcome","user_exit"};
     Socket* clientSocket=static_cast<Socket*>(arg);
 
-    send(*clientSocket,"Welcome!");
+    
+
+    send(*clientSocket,sysMsg[0]);
 
     while(serviceFlag)
     {
         receive(*clientSocket,message);
         if(message=="exit")
         {
-            send(*clientSocket,"user_exit");
+
+            send(*clientSocket,sysMsg[1]);
             DeleteClient(clientSocket);
             break;
         }
@@ -164,7 +168,7 @@ void ServerSocket::RecvFile(Socket* clientSocket)
     std::string message;
     FileOperator fileOperator;
     //using IP address to name received file
-    fileOperator.Open(clientSocket->GetAddress().c_str(),WRITE_CREATE_MODE);
+    fileOperator.Open(clientSocket->getAddress().c_str(),WRITE_CREATE_MODE);
 
     int recvBytes;
     int writeBytes;
