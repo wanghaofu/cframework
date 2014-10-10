@@ -55,7 +55,7 @@ class Socket
 
 		int m_sock;
 		int port;
-		String address;
+		char  *address;
 
 		sockaddr_in m_addr;
 };
