@@ -25,14 +25,14 @@ class ServerSocket : public Socket
 		void accept ( ServerSocket& );
          //accept multi-clients
 		bool accept();
-		void Run();
+		void run();
 		void RecvFile(Socket* clientSocket);
 	private:
 		
 		void AddClient(Socket* clientSocket);
 		static void DeleteClient(Socket* clientSocket);
-		static void* ProcessMessage(void* arg);
-		static void SendMsgToAllUsers(const std::string& message);
+		static void* processMessage(void* arg);
+		static void sendMsgToAllUsers(const std::string& message);
 
 		static list<Socket*> clientSockets;
 		static bool serviceFlag;

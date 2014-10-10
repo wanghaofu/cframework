@@ -61,8 +61,11 @@ void ServerSocket::accept ( ServerSocket& sock )
 **/
 bool ServerSocket::accept()
 {
+    // ? ! 
     Socket* clientSocket=new Socket;
+    
     accept(*clientSocket);
+    
     AddClient(clientSocket);
 
     //create new thread for a new client
@@ -80,7 +83,7 @@ bool ServerSocket::accept()
     return true;
 }
 
-void ServerSocket::Run()
+void ServerSocket::run()
 {
     while(serviceFlag)
     {
@@ -91,8 +94,11 @@ void ServerSocket::Run()
         sleep(1);
     }
 }
-
-void* ServerSocket::ProcessMessage(void* arg)
+static void ServerSocket::sendMsgToAllUsers(const std::string& message)
+{
+    
+}
+void* ServerSocket::processMessage(void* arg)
 {
     std::string message;
     Socket* clientSocket=static_cast<Socket*>(arg);
