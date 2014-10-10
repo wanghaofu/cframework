@@ -48,7 +48,7 @@ const ServerSocket& ServerSocket::operator >> ( std::string&  s ) const
 /**
 old 
 **/
-void ServerSocket::accept ( ServerSocket& sock )
+void ServerSocket::accept( Socket& socket )
 {
     if ( ! Socket::accept ( sock ) )
     {
@@ -96,7 +96,7 @@ void ServerSocket::run()
 }
 static void ServerSocket::sendMsgToAllUsers(const std::string& message)
 {
-    
+
 }
 void* ServerSocket::processMessage(void* arg)
 {
