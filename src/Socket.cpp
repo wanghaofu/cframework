@@ -232,7 +232,7 @@ int Socket::getPort()
 {
 	return port;
 }
-string Socket::getAddress()
+std::string Socket::getAddress()
 {
 	return address;
 }

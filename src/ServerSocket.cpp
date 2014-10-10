@@ -108,15 +108,15 @@ void* ServerSocket::processMessage(void* arg)
 
     
 
-    Socket::send(*clientSocket,sysMsg[0]);
+  //  send(*clientSocket,sysMsg[0]);
 
     while(serviceFlag)
     {
-        receive(*clientSocket,message);
+      //  receive(*clientSocket,message);
         if(message=="exit")
         {
 
-            Socket::send(*clientSocket,sysMsg[1]);
+    //        send(*clientSocket,sysMsg[1]);
             DeleteClient(clientSocket);
             break;
         }
