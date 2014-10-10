@@ -163,7 +163,7 @@ void EpollServerSocket::ReceiveMessage(Socket& clientSocket,std::string& message
 
     while(done)
     {
-        int receiveNumber=Socket::receive(clientSocket,message);
+        int receiveNumber=Socket::recv(message);
         if(receiveNumber==-1)
         {
             //if errno == EAGAIN, that means we have read all data.

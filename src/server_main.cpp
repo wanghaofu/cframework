@@ -7,7 +7,7 @@ using namespace std;
 int main ( int argc, char ** )
 {
    cout<<"Running server..."<<endl;
-   /* try
+   try
     {
         ServerSocket server(8080);
 
@@ -19,10 +19,10 @@ int main ( int argc, char ** )
             try
             {
                 string message;
-                server.Receive(newSocket,message);
+                server.receive(newSocket,message);
                 cout<<"Receive message: "<<message<<endl;
                 message="Here is server";
-                server.Send(newSocket,message);
+                server.send(newSocket,message);
             }
             catch(SocketException&){}
         }
@@ -30,7 +30,7 @@ int main ( int argc, char ** )
     catch(SocketException& ex)
     {
          cout << "Exception was caught:" << ex.Description() << "\nExiting.\n";
-    }*/
+    }
     return 0;
 }
 

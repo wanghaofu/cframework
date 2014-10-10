@@ -44,7 +44,9 @@ const ServerSocket& ServerSocket::operator >> ( std::string&  s ) const
     }
     return *this;
 }
-
+/**
+old 
+**/
 void ServerSocket::accept ( ServerSocket& sock )
 {
     if ( ! Socket::accept ( sock ) )
@@ -53,6 +55,9 @@ void ServerSocket::accept ( ServerSocket& sock )
     }
 }
 
+/**
+支持epoll的版本
+**/
 bool ServerSocket::Accept()
 {
     Socket* clientSocket=new Socket;
@@ -91,14 +96,14 @@ void* ServerSocket::ProcessMessage(void* arg)
     std::string message;
     Socket* clientSocket=static_cast<Socket*>(arg);
 
-    Send(*clientSocket,"Welcome!");
+    send(*clientSocket,"Welcome!");
 
     while(serviceFlag)
     {
         Receive(*clientSocket,message);
         if(message=="exit")
         {
-            Send(*clientSocket,"user_exit");
+            send(*clientSocket,"user_exit");
             DeleteClient(clientSocket);
             break;
         }
@@ -166,7 +171,7 @@ void ServerSocket::RecvFile(Socket* clientSocket)
         if(writeBytes<recvBytes)
         {
             perror("write to file failed");
-            Socket::Send(*clientSocket,"Error when server receiving file.");
+            Socket::send(*clientSocket,"Error when server receiving file.");
             return;
         }
 
@@ -177,5 +182,5 @@ void ServerSocket::RecvFile(Socket* clientSocket)
     }
 
     if(recvBytes >=0 )
-        Socket::Send(*clientSocket,"server has received your file.");
+        Socket::send(*clientSocket,"server has received your file.");
 }
