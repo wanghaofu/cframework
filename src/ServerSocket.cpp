@@ -10,6 +10,9 @@
 
 ServerSocket::ServerSocket ( const int port )
 {
+    ServerSocket::clientSockets=NULL;
+    ServerSocket::serviceFlag=1;
+    ServerSocket::readWriteLock=1;
     if ( ! Socket::create() )
     {
         throw SocketException ( "Could not create server socket." );
