@@ -4,6 +4,8 @@
 #include "SocketException.h"
 #include "FileOperator.h"
 #include <string>
+#include <list>
+#include <semaphore.h>
 #include "comm.h"
 
 ServerSocket::ServerSocket ( const int port )
