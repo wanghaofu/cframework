@@ -129,9 +129,9 @@ bool Socket::send(Socket& socket,const std::string& message) const
 
 int Socket::receive(Socket& socket,std::string& message) const
 {
-    char buffer[MAXRECEIVE+1];
+    char buffer[MAXRECV+1];
     message.clear();
-    memset(buffer,0,MAXRECEIVE+1);
+    memset(buffer,0,MAXRECV+1);
 
     int numberRead=::recv(socket.m_sock,buffer,MAXRECEIVE,0);
     if(numberRead==-1)
@@ -200,7 +200,7 @@ void Socket::set_non_blocking ( const bool b )
 
 	int opts;
 
-	opts = fcntl ( m_sock,F_GETFL );g
+	opts = fcntl ( m_sock,F_GETFL );
 
 	if ( opts < 0 )
 	{
@@ -220,9 +220,9 @@ int Socket::getSocketfd(){
 	return m_sock;
 }
 /**
-该方法需要修正 临时写的
+该方法需要修正 临时写的参数类型未必正确
 **/
-void Socket::erase(socket sockfd)
+void Socket::erase(int socketfd)
 {
 	
 }

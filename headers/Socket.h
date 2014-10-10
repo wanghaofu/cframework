@@ -50,11 +50,12 @@ class Socket
 		int getPort();
 		std::string getAddress();
 
+		int port;
 
 	private:
 
 		int m_sock;
-		int port;
+		
 
 		std::string address;
 
