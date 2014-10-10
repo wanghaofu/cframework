@@ -48,7 +48,7 @@ const ServerSocket& ServerSocket::operator >> ( std::string&  s ) const
 /**
 old 
 **/
-void ServerSocket::accept( Socket& socket )
+void ServerSocket::accept(Socket& socket )
 {
     if ( ! Socket::accept ( sock ) )
     {
