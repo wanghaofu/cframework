@@ -50,7 +50,7 @@ old
 **/
 void ServerSocket::accept(Socket& socket )
 {
-    if ( ! Socket::accept ( sock ) )
+    if ( ! Socket::accept ( socket ) )
     {
         throw SocketException ( "Could not accept socket .");
     }
