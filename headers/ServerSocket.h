@@ -26,12 +26,6 @@ class ServerSocket : public Socket
 		       
 		void run();
 		void RecvFile(Socket* clientSocket);
-
-
-		static list<Socket*> clientSockets;
-		static bool serviceFlag;
-
-		static ThreadReadWriteLock readWriteLock;
 	private:
 		
 		  //accept multi-clients
@@ -40,8 +34,9 @@ class ServerSocket : public Socket
 		static void DeleteClient(Socket* clientSocket);
 		static void* processMessage(void* arg);
 		static void sendMsgToAllUsers(const std::string& message);
-
-		
+        static list<Socket*> clientSockets;
+        static bool serviceFlag;
+        static ThreadReadWriteLock readWriteLock;
 
 };
 

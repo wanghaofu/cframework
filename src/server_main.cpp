@@ -3,6 +3,12 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
+
+#include <errno.h>
+#include <string>
+#include <list>
+#include <semaphore.h>
+
 using namespace std;
 int main ( int argc, char ** )
 {
