@@ -225,3 +225,13 @@ void Socket::erase(socket sockfd)
 {
 	
 }
+
+
+int Socket::getPort()
+{
+	return port;
+}
+string Socket::getAddress()
+{
+	return address;
+}

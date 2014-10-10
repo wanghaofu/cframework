@@ -102,11 +102,12 @@ void* ServerSocket::processMessage(void* arg)
 {
     std::string message;
     std::string sysMsg[2]={"Welcome","user_exit"};
+
     Socket* clientSocket=static_cast<Socket*>(arg);
 
     
 
-    send(*clientSocket,sysMsg[0]);
+    Socket::send(*clientSocket,sysMsg[0]);
 
     while(serviceFlag)
     {
@@ -114,12 +115,12 @@ void* ServerSocket::processMessage(void* arg)
         if(message=="exit")
         {
 
-            send(*clientSocket,sysMsg[1]);
+            Socket::send(*clientSocket,sysMsg[1]);
             DeleteClient(clientSocket);
             break;
         }
         else
-            SendMsgToAllUsers(message);
+            sendMsgToAllUsers(message);
         sleep(1);
     }
     pthread_exit(NULL);
@@ -187,7 +188,7 @@ void ServerSocket::RecvFile(Socket* clientSocket)
         }
 
         //if all bytes has been wrote
-        if(recvBytes==0 || recvBytes!=MAXRECEIVE)
+        if(recvBytes==0 || recvBytes!=MAXRECV)
             break;
 
     }
