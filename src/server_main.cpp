@@ -23,8 +23,8 @@ int main ( int argc, char ** )
           while ( true )
         {
           string data;
-          new_sock >> data;
-          new_sock << data;
+          server >> data;
+          server << data;
         }
         }
       catch ( SocketException& ) {}
