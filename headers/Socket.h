@@ -54,7 +54,7 @@ class Socket
 	private:
 
 		int m_sock;
-		int port；
+		int port;
 		String address;
 
 		sockaddr_in m_addr;
