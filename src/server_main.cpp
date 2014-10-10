@@ -15,7 +15,7 @@ int main ( int argc, char ** )
       while ( true )
     {
 
-      ServerSocket new_sock;
+      Socket new_sock;
       server.accept ( new_sock );
 
       try
