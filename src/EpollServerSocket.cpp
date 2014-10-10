@@ -99,7 +99,7 @@ void EpollServerSocket::run()
 void EpollServerSocket::processMessage(Socket& clientSocket)
 {
     std::string message;
-    ReceiveMessage(clientSocket,message);
+    receiveMessage(clientSocket,message);
 
     if(message=="exit")
     {
