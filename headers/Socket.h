@@ -55,7 +55,8 @@ class Socket
 
 		int m_sock;
 		int port;
-		string address;
+
+		std::string address;
 
 		sockaddr_in m_addr;
 };
