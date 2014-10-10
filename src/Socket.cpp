@@ -218,3 +218,10 @@ void Socket::set_non_blocking ( const bool b )
 int Socket::getSocketfd(){
 	return m_sock;
 }
+/**
+该方法需要修正 临时写的
+**/
+void Socket::erase(socket sockfd)
+{
+	
+}

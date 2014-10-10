@@ -45,7 +45,7 @@ class Socket
 
 		bool is_valid() const { return m_sock != -1; }
 		int getSocketfd();
-
+		void erase(int sockfd)
 	private:
 
 		int m_sock;

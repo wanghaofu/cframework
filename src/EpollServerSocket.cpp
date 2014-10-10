@@ -145,7 +145,8 @@ void EpollServerSocket::deleteClient(int sockfd)
     epoll.Delete(sockfd);
 
     delete clientSockets[sockfd];
-    clientSockets.erase(sockfd);   /定义erase没有声明
+    
+    clientSockets.erase(sockfd); //定义erase没有声明
 }
 //向所有连接发送信息
 void EpollServerSocket::sendToAllUsers(const std::string& message) const
