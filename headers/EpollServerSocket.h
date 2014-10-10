@@ -11,7 +11,7 @@ class EpollServerSocket:public Socket
         EpollServerSocket(const int port);
         virtual ~EpollServerSocket();
 
-        void Run();
+        void run();
 
     private:
         //when using the EPOLLET flag,

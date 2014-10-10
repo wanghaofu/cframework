@@ -44,7 +44,7 @@ EpollServerSocket::~EpollServerSocket()
 void EpollServerSocket::run()
 {
     //add listener socketfd to epoll
-    if(epoll.Add(Socket::GetSocketfd(),EPOLLIN)==false)
+    if(epoll.Add(Socket::getSocketfd(),EPOLLIN)==false)
         return;
 
     int i;
@@ -73,7 +73,7 @@ void EpollServerSocket::run()
             }
 
             //if event is triggered by listener socket what is this
-            else if(epoll.GetEventOccurfd(i)==Socket::GetSocketfd())
+            else if(epoll.GetEventOccurfd(i)==Socket::getSocketfd())
             {
                 clientSocket=new Socket();
                 if(addNewClient(*clientSocket)==false)
@@ -105,12 +105,12 @@ void EpollServerSocket::processMessage(Socket& clientSocket)
     {
         sendMessage(clientSocket,"user_exit");
 
-        deleteClient(clientSocket.GetSocketfd());
+        deleteClient(clientSocket.getSocketfd());
     }
     else
     {
         //可以发送给单个用户！ 这个以来与信息包的进一步扩展。client list 进行重构
-        SendToAllUsers(message);
+        sendToAllUsers(message);
     }  
 }
 
@@ -125,7 +125,7 @@ bool EpollServerSocket::addNewClient(Socket& clientSocket)
     //set socket non-blocking!!
     clientSocket.set_non_blocking(true);
 
-    if(epoll.Add(clientSocket.GetSocketfd(),EPOLLIN | EPOLLET)==false)
+    if(epoll.Add(clientSocket.getSocketfd(),EPOLLIN | EPOLLET)==false)
         return false;
 
     #ifdef DEBUG
@@ -197,14 +197,14 @@ void EpollServerSocket::receiveMessage(Socket& clientSocket,std::string& message
             if (errno != EAGAIN)
             {
                 perror ("ReceiveMessage error");
-                deleteClient(clientSocket.GetSocketfd());
+                deleteClient(clientSocket.getSocketfd());
             }
             return;
         }
         else if(receiveNumber==0)
         {
             // End of file. The remote has closed the connection.
-            deleteClient(clientSocket.GetSocketfd());
+            deleteClient(clientSocket.getSocketfd());
         }
 
         //if receiveNumber is equal to MAXRECEIVE,
