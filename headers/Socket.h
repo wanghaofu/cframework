@@ -10,7 +10,6 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <string>
-#include <String>
 #include <arpa/inet.h>
 //#include "comm.h"
 
