@@ -48,7 +48,7 @@ class Socket
 		void erase(int sockfd);
 
 		int getPort();
-		int getAddress();
+		std::string getAddress();
 
 
 	private:
