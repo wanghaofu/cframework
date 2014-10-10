@@ -44,9 +44,9 @@ bool Socket::create()
 
 
 
-bool Socket::bind ( const int port )
+bool Socket::bind ( const int _port )
 {
-	this.port = port;
+	port = _port;
 	if ( ! is_valid() )
 	{
 		return false;
@@ -56,7 +56,7 @@ bool Socket::bind ( const int port )
 
 	m_addr.sin_family = AF_INET;
 	m_addr.sin_addr.s_addr = INADDR_ANY;
-	m_addr.sin_port = htons ( port );
+	m_addr.sin_port = htons ( _port );
 
 	int bind_return = ::bind ( m_sock,
 				( struct sockaddr * ) &m_addr,sizeof ( m_addr ) );
