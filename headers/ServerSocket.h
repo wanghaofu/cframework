@@ -22,13 +22,14 @@ class ServerSocket : public Socket
 		const ServerSocket& operator << ( const std::string& ) const;
 		const ServerSocket& operator >> ( std::string& ) const;
 
-		void accept ( ServerSocket& );
-         //accept multi-clients
-		bool accept();
+        void Accept(Socket& socket);
+		       
 		void run();
 		void RecvFile(Socket* clientSocket);
 	private:
 		
+		  //accept multi-clients
+		bool accept();
 		void AddClient(Socket* clientSocket);
 		static void DeleteClient(Socket* clientSocket);
 		static void* processMessage(void* arg);
