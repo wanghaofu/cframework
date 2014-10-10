@@ -22,7 +22,7 @@ int main ( int argc, char ** )
         {
           while ( true )
         {
-          std::string data;
+          string data;
           new_sock >> data;
           new_sock << data;
         }
