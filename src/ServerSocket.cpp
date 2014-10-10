@@ -49,7 +49,7 @@ const ServerSocket& ServerSocket::operator >> ( std::string&  s ) const
 /**
 old 
 **/
-void ServerSocket::accept(Socket& socket )
+void ServerSocket::accept(ServerSocket& socket )
 {
     if ( ! Socket::accept ( socket ) )
     {
