@@ -3,6 +3,7 @@
 #include "ServerSocket.h"
 #include "SocketException.h"
 #include "FileOperator.h"
+#include <string>
 #include "comm.h"
 
 ServerSocket::ServerSocket ( const int port )
