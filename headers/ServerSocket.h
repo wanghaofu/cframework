@@ -32,7 +32,8 @@ class ServerSocket : public Socket
 		bool accept();
 		void AddClient(Socket* clientSocket);
 		static void DeleteClient(Socket* clientSocket);
-		static void* processMessage(void* arg);
+		//static void* processMessage(void* arg);
+		static void* processMessage(Socket* arg);
 		static void sendMsgToAllUsers(const std::string& message);
         static list<Socket*> clientSockets;
         static bool serviceFlag;
