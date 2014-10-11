@@ -146,11 +146,11 @@ void* ServerSocket::processMessage(void* arg)
             DeleteClient(clientSocket);
             break;
         }else
-       ｛
+        {
             send(*clientSocket,message);
             //向所有用户发送消息 //该方法暂时没有写 需要便利已连接的list端口进行逐个发送
             sendMsgToAllUsers(message);
-        ｝
+        }
         sleep(1);
     }
     pthread_exit(NULL);
