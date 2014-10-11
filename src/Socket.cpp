@@ -232,10 +232,9 @@ int Socket::getPort()
 }
 std::string Socket::getAddress()
 {
-	
-	   ip = inet_ntoa(m_addr.sin_addr);
-	  String Sip;
+      char *ip;
+      string Sip;
+	  ip = inet_ntoa(m_addr.sin_addr);
 	  Sip = ip;
 	  return Sip;
-
 }

@@ -128,7 +128,7 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
 void* ServerSocket::processMessage(void* arg)
 {
     std::string message;
-    std::string sysMsg[2]={"Welcome","user_exit"};
+   
 
     //转化回来 
     Socket* clientSocket=static_cast<Socket*>(arg);
