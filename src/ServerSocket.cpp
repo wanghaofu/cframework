@@ -114,7 +114,7 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
          {   
-            send(iter,message);
+            send(*iter,message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
