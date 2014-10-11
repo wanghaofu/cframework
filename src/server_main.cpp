@@ -48,6 +48,9 @@ void mutileServer()
    try{
     ServerSocket server(30000);
     server.run();
+   }catch(SocketException& e)
+   {
+    std::cout << "Exception was caught:"<< e.description() << "\nExting.\n";
    }
 }
 
