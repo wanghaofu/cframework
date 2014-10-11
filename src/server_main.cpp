@@ -29,12 +29,12 @@ cout << "Running server ..." << endl;
 
       try
         {
-          while ( true )
-        {
+          // while ( true )
+        // {
           string data;
           server >> data;
           server << data;
-        }
+        // }
         }
       catch ( SocketException& ) {}
 
