@@ -6,7 +6,7 @@
 //#include <cstring>
 using namespace std;
 
-const DEBUG=true;
+const bool DEBUG=true;
 //int main ( int argc, int argv[] )
 int main( int argc, char **)
 {
