@@ -1,6 +1,7 @@
 #include "ThreadReadWriteLock.h"
 #include <pthread.h>
 #include <iostream>
+#include <asm/errno.h>
 using namespace std;
 
 ThreadReadWriteLock::ThreadReadWriteLock()
