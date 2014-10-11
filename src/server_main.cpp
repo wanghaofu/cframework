@@ -28,8 +28,9 @@ int main ( int argc, char ** )
 			while ( true )
 			{
 				string data;
-				new_sock.server >> data;  //用已连接描述符进行胡同
-				new_sock.server << data;
+				new_sock >> data;  //用已连接描述符进行调用
+				cout << "Recv data :" << data << endl;
+				new_sock << data;
 			}
 		}
 		catch ( SocketException& ) {}
@@ -41,10 +42,6 @@ catch ( SocketException& e )
 }
 
 return 0;
-/** cout<<"Running server..."<<endl;
-  try
-  {
-  ServerSocket server(8080);
 
 /** cout<<"Running server..."<<endl;
 try
