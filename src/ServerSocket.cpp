@@ -114,7 +114,7 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
          {   
-            iter->send(message);
+            *iter.send(message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
@@ -188,7 +188,7 @@ void ServerSocket::DeleteClient(Socket* socket)
 
                 //delete socket* in list
                 delete (*iter);
-                *iter.erase(iter.m_sock);  //this has question !
+               // //this has question !
                 std::cout<<"Now "<<clientSockets.size()<<" users..\n";
                 break;
             }
