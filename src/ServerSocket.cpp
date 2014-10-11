@@ -135,12 +135,12 @@ void* ServerSocket::processMessage(void* arg)
 
     
     //在父类Socket中定义的方法 都到整整的对象
-    *clientSocket.send("hello");
+    *clientSocket>>"hello";
 
     while(serviceFlag)
     {
         //在父类中定义的方法
-      *clientSocket.receive(message);
+      *clientSocket<<message;
         if(message=="exit")
         {
 
