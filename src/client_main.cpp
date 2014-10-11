@@ -21,9 +21,9 @@ string message;
    {
       cout  <<"Send :" ;
 
-            getline(cin,message);
+      getline(cin,message);
 
-           if(message.empty())
+      if(message.empty())
         {
         continue;
         }

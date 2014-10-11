@@ -20,32 +20,30 @@ cout << "Running server ..." << endl;
     {
       // Create the socket
       ServerSocket server ( 30000 );
-
-      while ( true )
-    {
-
-      Socket new_sock;
-      server.accept ( new_sock );
-
-      try
+       while ( true )
         {
-          // while ( true )
-        // {
-          string data;
-          server >> data;
-          server << data;
-        // }
-        }
-      catch ( SocketException& ) {}
 
+        Socket new_sock;
+        server.accept ( new_sock );
+
+       try
+           {
+             while ( true )
+              {
+              std::string data;
+              new_sock >> data;
+              new_sock << data;
+              }
+           }
+       catch ( SocketException& ) {}
+
+        }
     }
-    }
-  catch ( SocketException& e )
+catch ( SocketException& e )
     {
       std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
     }
-
-  return 0;
+    return 0;
   
   /** cout<<"Running server..."<<endl;
    try
