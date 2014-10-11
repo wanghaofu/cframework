@@ -135,20 +135,20 @@ void* ServerSocket::processMessage(void* arg)
 
     
     //在父类Socket中定义的方法 都到整整的对象
-    *clientSocket.send("hello");
+    clientSocket->send("hello");
 
     while(serviceFlag)
     {
         //在父类中定义的方法
-      *clientSocket.recv(message);
+      clientSocket->recv(message);
         if(message=="exit")
         {
 
-            *clientSocket.send("xxx");
+            clientSocket->send("xxx");
             DeleteClient(clientSocket);
             break;
         }else{
-            *clientSocket.send(message);
+            clientSocket->send(message);
             //向所有用户发送消息 //该方法暂时没有写 需要便利已连接的list端口进行逐个发送
             sendMsgToAllUsers(message);
         }
