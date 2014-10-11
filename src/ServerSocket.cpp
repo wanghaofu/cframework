@@ -132,15 +132,18 @@ void* ServerSocket::processMessage(void* arg)
 
     //转化回来 
     Socket* clientSocket=static_cast<Socket*>(arg);
+
+    
     //在父类Socket中定义的方法 都到整整的对象
-    send(*clientSocket,"hello");
+    *clientSocket.send("hello");
 
     while(serviceFlag)
     {
         //在父类中定义的方法
-      receive(*clientSocket,message);
+      *clientSocket.receive(message);
         if(message=="exit")
         {
+
             send(*clientSocket,"xxx");
             DeleteClient(clientSocket);
             break;
