@@ -141,6 +141,7 @@ void* ServerSocket::processMessage(void* arg)
     {
         //在父类中定义的方法
       clientSocket->recv(message);
+      std::cout << message << endl;
         if(message=="exit")
         {
 
