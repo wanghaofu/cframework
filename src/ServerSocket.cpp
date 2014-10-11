@@ -114,7 +114,7 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
          {   
-            send(*iter,message);
+            send(*iter,&message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
@@ -134,20 +134,20 @@ void* ServerSocket::processMessage(void* arg)
 
     
     //在父类Socket中定义的方法
-    send(*clientSocket,sysMsg[0]);
+    send(clientSocket,sysMsg[0]);
 
     while(serviceFlag)
     {
         //在父类中定义的方法
-      receive(*clientSocket,message);
+      receive(clientSocket,message);
         if(message=="exit")
         {
 
-            send(*clientSocket,sysMsg[1]);
+            send(clientSocket,sysMsg[1]);
             DeleteClient(clientSocket);
             break;
         }else{
-            send(*clientSocket,message);
+            send(clientSocket,message);
             //向所有用户发送消息 //该方法暂时没有写 需要便利已连接的list端口进行逐个发送
             sendMsgToAllUsers(message);
         }
