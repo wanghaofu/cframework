@@ -114,7 +114,7 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
          {   
-            send(iter,message);
+            send(*iter,message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
@@ -124,7 +124,7 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
 }
 //信息首发函数 why not server arg是个Socket的指针对象！
 //这个参数传递什么？ 由accept调用 是私有方法
-void* ServerSocket::processMessage(void* arg)
+void* ServerSocket::processMessage(Socket* arg)
 {
     std::string message;
     std::string sysMsg[2]={"Welcome","user_exit"};
