@@ -109,18 +109,19 @@ void ServerSocket::run()
 }
 void ServerSocket::sendMsgToAllUsers(const std::string& message)
 {
-    if(readWriteLock.SetWriteLock())
+   /** if(readWriteLock.SetWriteLock())
     {
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
          {   
-            send(*iter,&message);
+            send(*iter,message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
     }
     else
         serviceFlag=false;
+        **/
 }
 //信息首发函数 why not server arg是个Socket的指针对象！
 //这个参数传递什么？ 由accept调用 是私有方法
@@ -129,11 +130,9 @@ void* ServerSocket::processMessage(void* arg)
     std::string message;
     std::string sysMsg[2]={"Welcome","user_exit"};
 
-    //dont't understand!
+    //转化回来 
     Socket* clientSocket=static_cast<Socket*>(arg);
-
-    
-    //在父类Socket中定义的方法
+    //在父类Socket中定义的方法 都到整整的对象
     send(*clientSocket,"hello");
 
     while(serviceFlag)
@@ -142,7 +141,6 @@ void* ServerSocket::processMessage(void* arg)
       receive(*clientSocket,message);
         if(message=="exit")
         {
-
             send(*clientSocket,"xxx");
             DeleteClient(clientSocket);
             break;
