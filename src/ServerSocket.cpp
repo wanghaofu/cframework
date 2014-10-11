@@ -109,19 +109,19 @@ void ServerSocket::run()
 }
 void ServerSocket::sendMsgToAllUsers(const std::string& message)
 {
-   /** if(readWriteLock.SetWriteLock())
+   if(readWriteLock.SetWriteLock())
     {
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
          {   
-            send(*iter,message);
+            iter->send(message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
     }
     else
         serviceFlag=false;
-        **/
+        
 }
 //信息首发函数 why not server arg是个Socket的指针对象！
 //这个参数传递什么？ 由accept调用 是私有方法
@@ -141,11 +141,11 @@ void* ServerSocket::processMessage(void* arg)
     {
         //在父类中定义的方法
       clientSocket->recv(message);
-      std::cout << message << std::endl;
+      std::cout <<"Client :"<< message << std::endl;
         if(message=="exit")
         {
 
-            clientSocket->send("xxx");
+            clientSocket->send("has exit");
             DeleteClient(clientSocket);
             break;
         }else{
@@ -185,9 +185,10 @@ void ServerSocket::DeleteClient(Socket* socket)
             if((*iter)->getAddress()==socket->getAddress()
                && (*iter)->getPort()==socket->getPort())
             {
+
                 //delete socket* in list
                 delete (*iter);
-                clientSockets.erase(iter);
+                *iter.erase(iter.m_sock);  //this has question !
                 std::cout<<"Now "<<clientSockets.size()<<" users..\n";
                 break;
             }
@@ -229,3 +230,5 @@ void ServerSocket::RecvFile(Socket* clientSocket)
     if(recvBytes >=0 )
         Socket::send(*clientSocket,"server has received your file.");
 }
+
+

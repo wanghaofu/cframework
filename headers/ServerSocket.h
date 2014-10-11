@@ -23,9 +23,10 @@ class ServerSocket : public Socket
 		const ServerSocket& operator >> ( std::string& ) const;
 
         void accept(Socket& socket);
-		       
+		      
 		void run();
 		void RecvFile(Socket* clientSocket);
+
 	private:
 		
 		  //accept multi-clients
@@ -33,7 +34,7 @@ class ServerSocket : public Socket
 		void AddClient(Socket* clientSocket);
 		static void DeleteClient(Socket* clientSocket);
 		static void* processMessage(void* arg);
-	
+		
 		static void sendMsgToAllUsers(const std::string& message);
         static list<Socket*> clientSockets;
         static bool serviceFlag;

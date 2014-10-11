@@ -217,13 +217,6 @@ void Socket::set_non_blocking ( const bool b )
 int Socket::getSocketfd(){
 	return m_sock;
 }
-/**
-该方法需要修正 临时写的参数类型未必正确
-**/
-void Socket::erase(int socketfd)
-{
-	
-}
 
 int Socket::getPort()
 {
@@ -237,4 +230,12 @@ std::string Socket::getAddress()
 	  ip = inet_ntoa(m_addr.sin_addr);
 	  Sip = ip;
 	  return Sip;
+}
+/**
+该方法需要修正 临时写的参数类型未必正确
+**/
+void Socket::erase(int socketfd)
+{
+	socketfd = null;
+    //该方法必须移动到server中
 }
