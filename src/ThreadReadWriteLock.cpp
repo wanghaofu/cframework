@@ -25,5 +25,5 @@ void ThreadReadWriteLock::UnLock()
 //todo not ok
 bool ThreadReadWriteLock::SetReadLock()
 {
-
+ return true;
 }
