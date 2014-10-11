@@ -15,65 +15,63 @@ using namespace std;
 int main ( int argc, char ** )
 {
 
-cout << "Running server ..." << endl;
-    try
-    {
-      // Create the socket
-      ServerSocket server ( 30000 );
+	cout << "Running server ..." << endl;
+	try
+	{
+		// Create the socket
+		ServerSocket server ( 30000 );
 
-      while ( true )
-    {
 
-      Socket new_sock;
-      server.accept ( new_sock );
+			Socket new_sock;
+			server.accept ( new_sock );
 
-      try
-        {
-          // while ( true )
-        // {
-          string data;
-          server >> data;
-          server << data;
-        // }
-        }
-      catch ( SocketException& ) {}
+			try
+			{
+				 while ( true )
+				 {
+				string data;
+				server >> data;
+				server << data;
+				 }
+			}
+			catch ( SocketException& ) {}
 
-    }
-    }
-  catch ( SocketException& e )
-    {
-      std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
-    }
+		}
+	}
+	catch ( SocketException& e )
+	{
+		std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
+	}
 
-  return 0;
-  
-  /** cout<<"Running server..."<<endl;
-   try
-    {
-        ServerSocket server(8080);
+	return 0;
 
-        while(true)
-        {
-            Socket newSocket;
-            server.Accept(newSocket);
+	/** cout<<"Running server..."<<endl;
+	  try
+	  {
+	  ServerSocket server(8080);
 
-            try
-            {
-                string message;
-                server.receive(newSocket,message);
-                cout<<"Receive message: "<<message<<endl;
-                message="Here is server";
-                server.send(newSocket,message);
-            }
-            catch(SocketException&){}
-        }
-    }
-    catch(SocketException& ex)
-    {
-         cout << "Exception was caught:" << ex.Description() << "\nExiting.\n";
-    }
-    return 0;
-    **/
+	  while(true)
+	  {
+	  Socket newSocket;
+	  server.Accept(newSocket);
+
+	  try
+	  {
+	  string message;
+	  server.receive(newSocket,message);
+	  cout<<"Receive message: "<<message<<endl;
+	  message="Here is server";
+	  server.send(newSocket,message);
+	  }
+	  catch(SocketException&){}
+	  }
+	  }
+	  catch(SocketException& ex)
+	  {
+	  cout << "Exception was caught:" << ex.Description() << "\nExiting.\n";
+	  }
+	  return 0;
+	 **/
 }
 
 
