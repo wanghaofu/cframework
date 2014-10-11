@@ -43,13 +43,13 @@ EpollServerSocket::~EpollServerSocket()
 **/
 void EpollServerSocket::run()
 {
-    //add listener socketfd to epoll
+    //add listener socketfd to epoll 监听套接字描述符
     if(epoll.Add(Socket::getSocketfd(),EPOLLIN)==false)
         return;
 
     int i;
     int eventNumber;
-    Socket* clientSocket;
+    Socket* clientSocket; //定义已连接变量
 
     while(true)
     {

@@ -228,9 +228,14 @@ void Socket::erase(int socketfd)
 
 int Socket::getPort()
 {
-	return port;
+	return port = ntohs(m_addr.sin_port);
 }
 std::string Socket::getAddress()
 {
-	return address;
+	
+	   ip = inet_ntoa(m_addr.sin_addr);
+	  String Sip;
+	  Sip = ip;
+	  return Sip;
+
 }

@@ -82,6 +82,7 @@ bool ServerSocket::accept()
 
     //create new thread for a new client
     pthread_t newThread;
+    //! 多线程启动  //在这里对单个连接生成一个线程！
     int result=pthread_create(&newThread,NULL,processMessage,static_cast<void*>(clientSocket));
     if(result!=0)
         return false;
@@ -108,31 +109,53 @@ void ServerSocket::run()
 }
 void ServerSocket::sendMsgToAllUsers(const std::string& message)
 {
-
+    if(readWriteLock.SetWriteLock())
+    {
+        list<Socket*>::iterator iter;
+        for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
+            if((*iter)->getAddress()==socket->getAddress()
+               && (*iter)->getPort()==socket->getPort())
+            {
+                  send(*iter,"Server :" + message);
+                std::cout<<"Now "<<clientSockets.size()<<" users..\n";
+                break;
+            }
+        readWriteLock.UnLock();
+    }
+    else
+        serviceFlag=false;
 }
+//信息首发函数 why not server arg是个Socket的指针对象！
+//这个参数传递什么？ 由accept调用 是私有方法
 void* ServerSocket::processMessage(void* arg)
 {
     std::string message;
     std::string sysMsg[2]={"Welcome","user_exit"};
 
+    //dont't understand!
     Socket* clientSocket=static_cast<Socket*>(arg);
 
     
-
-  //  send(*clientSocket,sysMsg[0]);
+    //在父类Socket中定义的方法
+    send(*clientSocket,sysMsg[0]);
 
     while(serviceFlag)
     {
-      //  receive(*clientSocket,message);
+        //在父类中定义的方法
+      receive(*clientSocket,message);
         if(message=="exit")
         {
 
-    //        send(*clientSocket,sysMsg[1]);
+            send(*clientSocket,sysMsg[1]);
             DeleteClient(clientSocket);
             break;
         }
         else
+       ｛
+            send(*clientSocket,"Server :" + message);
+            //向所有用户发送消息 //该方法暂时没有写 需要便利已连接的list端口进行逐个发送
             sendMsgToAllUsers(message);
+        ｝
         sleep(1);
     }
     pthread_exit(NULL);
@@ -144,6 +167,7 @@ void ServerSocket::AddClient(Socket* socket)
 {
     if(readWriteLock.SetWriteLock())
     {
+        //clientSockets是一个列表 保存已连接socket pubsh_back是list的一个方法
         clientSockets.push_back(socket);
 
         std::cout<<"Now "<<clientSockets.size()<<" users..";

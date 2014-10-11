@@ -15,6 +15,8 @@ class ThreadReadWriteLock
 
     private:
         pthread_rwlock_t readWriteLock;
+        pthread_mutex_t mutex;
+
 };
 
 #endif
