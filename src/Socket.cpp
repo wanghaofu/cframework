@@ -236,6 +236,6 @@ std::string Socket::getAddress()
 **/
 void Socket::erase(int socketfd)
 {
-	socketfd = null;
+	//socketfd = null;
     //该方法必须移动到server中
 }
