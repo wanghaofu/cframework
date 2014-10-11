@@ -11,7 +11,7 @@ int main( int argc, char **)
 
   try
   {
-       ClientSocket client_socket ( "localhost", 8080 );
+       ClientSocket client_socket ( "localhost", 30000 );
 
  //   HttpClient vote( "127.0.0.1",80);
     string reply;

@@ -15,6 +15,7 @@ using namespace std;
 int main ( int argc, char ** )
 {
 
+cout << "Running server ..." << endl;
     try
     {
       // Create the socket
