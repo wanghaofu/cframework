@@ -1,5 +1,7 @@
 #include "ServerSocket.h"
 #include "SocketException.h"
+#include "ThreadReadWriteLock.h"
+
 #include <string>
 #include <iostream>
 #include <cstdlib>
