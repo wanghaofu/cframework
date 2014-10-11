@@ -42,8 +42,6 @@ bool Socket::create()
 
 }
 
-
-
 bool Socket::bind ( const int _port )
 {
 	port = _port;
@@ -90,7 +88,9 @@ bool Socket::listen() const
 bool Socket::accept ( Socket& new_socket ) const
 {
 	int addr_length = sizeof ( m_addr );
-	new_socket.m_sock = ::accept ( m_sock, ( sockaddr * ) &m_addr, ( socklen_t * ) &addr_length );
+	//m_sock 服务端listen连接符
+	//new_socket.m_sock 一链接符！ 这里只有一个？！
+	new_socket.m_sock = ::accept ( m_sock, ( sockaddr * ) &m_addr, ( socklen_t * ) &addr_length ); //创建一个新的以连接资源
 
 	if ( new_socket.m_sock <= 0 )
 	 return false;
@@ -124,7 +124,7 @@ bool Socket::send(Socket& socket,const std::string& message) const
     return true;
 }
 
-
+//多个连接的时候使用  在服务端没有问题 这个是否应该server 部分 这里传递了连接符
 int Socket::receive(Socket& socket,std::string& message) const
 {
     char buffer[MAXRECV+1];
@@ -146,15 +146,15 @@ int Socket::receive(Socket& socket,std::string& message) const
     }
 
 }
-
+//单连接时候使用 在客户端没有问题
 int Socket::recv ( std::string& s ) const
 {
 
-       char buf[MAXRECV + 1]; 
-       s="";
-        memset( buf, 0, MAXRECV +1 );
+     char buf[MAXRECV + 1]; 
+     s="";
+     memset( buf, 0, MAXRECV +1 );
 
-       int status = ::recv ( m_sock, buf, MAXRECV , 0 );
+     int status = ::recv ( m_sock, buf, MAXRECV , 0 );
 
 	if ( status == -1 )
 	{

@@ -21,15 +21,15 @@ int main ( int argc, char ** )
 		// Create the socket
 		ServerSocket server ( 30000 );
 
-		ServerSocket new_sock;
+		ServerSocket new_sock; //这种是多链接模式 会把连接符保存起来
 		server.accept ( new_sock );
 		try
 		{
 			while ( true )
 			{
 				string data;
-				server >> data;
-				server << data;
+				new_sock.server >> data;  //用已连接描述符进行胡同
+				new_sock.server << data;
 			}
 		}
 		catch ( SocketException& ) {}
