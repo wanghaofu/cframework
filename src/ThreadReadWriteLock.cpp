@@ -1,6 +1,6 @@
 #include "ThreadReadWriteLock.h"
 #include <pthread.h>
-#include <iotream>
+#include <iostream>
 using namespace std;
 
 ThreadReadWriteLock::ThreadReadWriteLock()
