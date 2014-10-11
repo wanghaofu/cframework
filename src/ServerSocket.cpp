@@ -116,11 +116,12 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
          {
             *iter->send(message);
              std::cout<<"Now "<<" users..\n";     
-             readWriteLock.UnLock();
+            
          }
     }
     else
         serviceFlag=false;
+     readWriteLock.UnLock();
         
 }
 //信息首发函数 why not server arg是个Socket的指针对象！
