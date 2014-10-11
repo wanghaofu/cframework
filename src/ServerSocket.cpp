@@ -113,14 +113,10 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
     {
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
-            if((*iter)->getAddress()==socket->getAddress()
-               && (*iter)->getPort()==socket->getPort())
-            {
-                  send(*iter,"Server :" + message);
-                std::cout<<"Now "<<clientSockets.size()<<" users..\n";
-                break;
-            }
-        readWriteLock.UnLock();
+         {   send(*iter,"Server :" + message);
+             std::cout<<"Now "<<" users..\n";     
+             readWriteLock.UnLock();
+         }
     }
     else
         serviceFlag=false;
@@ -149,10 +145,9 @@ void* ServerSocket::processMessage(void* arg)
             send(*clientSocket,sysMsg[1]);
             DeleteClient(clientSocket);
             break;
-        }
-        else
+        }else
        ｛
-            send(*clientSocket,"Server :" + message);
+            send(*clientSocket,message);
             //向所有用户发送消息 //该方法暂时没有写 需要便利已连接的list端口进行逐个发送
             sendMsgToAllUsers(message);
         ｝
