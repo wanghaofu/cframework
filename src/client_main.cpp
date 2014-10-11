@@ -35,7 +35,7 @@ int main( int argc, char **)
 	      //    vote << "GET //html/58/n-58.html HTTP/1.0\r\nAccept:*.*\r\nAccept-Language:zh-cn\r\nAccept-Encoding: gzip, deflate\r\nUser-Agent: Mozilla/4.0(compatible;MSIE 6.0;Windows NT 5.1;SV!; .NET CLR 2.0.50727)\r\nHost:www.china-shufaijia.com\r\nConnection:Keep-Alive\r\n\r\n";
 	      //接受的信息
 	      client_socket >> reply;
-        if(reply)
+        if(!reply.empty())
         {
 	      std::cout << "Server: " << reply << endl;
         }
