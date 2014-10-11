@@ -8,9 +8,12 @@
 #include <list>
 #include <semaphore.h>
 #include "comm.h"
-
+//what means ?
 list<Socket*> ServerSocket::clientSockets;
+//means  ServerSocket::readWriteLock  ReadWriteLock是ThreadReadWriteLock的class 这里是初始化ServerSocket的静态变量readWriteLock 也就是这里已经初始化了！
 ThreadReadWriteLock ServerSocket::readWriteLock;
+
+//初始化静态变量！
 bool ServerSocket::serviceFlag=true;
 
 ServerSocket::ServerSocket ( const int port )
