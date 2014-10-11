@@ -113,8 +113,8 @@ void ServerSocket::sendMsgToAllUsers(const std::string& message)
     {
         list<Socket*>::iterator iter;
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
-         {   
-             *iter->send(message);
+         {
+            *iter->send(message);
              std::cout<<"Now "<<" users..\n";     
              readWriteLock.UnLock();
          }
@@ -180,7 +180,7 @@ void ServerSocket::DeleteClient(Socket* socket)
 {
     if(readWriteLock.SetWriteLock())
     {
-        list<Socket*>::iterator iter;
+        list<Socket*>::iterator iter;  //this hase question
         for(iter=clientSockets.begin();iter!=clientSockets.end();iter++)
             if((*iter)->getAddress()==socket->getAddress()
                && (*iter)->getPort()==socket->getPort())
