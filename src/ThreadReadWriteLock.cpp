@@ -10,18 +10,18 @@ ThreadReadWriteLock::~ThreadReadWriteLock()
 {
 
 }
-ThreadReadWriteLock::SetWriteLock()
+bool ThreadReadWriteLock::SetWriteLock()
+{
+	return true;
+}
+
+
+void ThreadReadWriteLock::UnLock()
 {
 
 }
 
-
-ThreadReadWriteLock::UnLock()
-{
-
-}
-
-ThreadReadWriteLock::SetReadLock()
+bool ThreadReadWriteLock::SetReadLock()
 {
 
 }
