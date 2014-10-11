@@ -16,8 +16,8 @@ int main( int argc, char **)
  //   HttpClient vote( "127.0.0.1",80);
     string reply;
     string res;
-   // while(2)
-   // {
+     while(2)
+   {
     //  cout  <<"Send :" ;
 
       //      getline(cin,message);
@@ -29,7 +29,7 @@ int main( int argc, char **)
        **/
       try
       {
-        //   client_socket << "this is testmessage";
+          client_socket << "this is testmessage";
     //    vote << "GET //html/58/n-58.html HTTP/1.0\r\nAccept:*.*\r\nAccept-Language:zh-cn\r\nAccept-Encoding: gzip, deflate\r\nUser-Agent: Mozilla/4.0(compatible;MSIE 6.0;Windows NT 5.1;SV!; .NET CLR 2.0.50727)\r\nHost:www.china-shufaijia.com\r\nConnection:Keep-Alive\r\n\r\n";
         client_socket >> reply;
         while (1)
@@ -42,7 +42,7 @@ int main( int argc, char **)
         }
       }
       catch ( SocketException& ) {}
-      /**
+      
         std::cout << "Server Message:" << reply << "\n";;
         if( message == "quit")
         {
@@ -50,7 +50,6 @@ int main( int argc, char **)
         return 0;
         }
         }
-       **/
   }
   catch ( SocketException& e )
   {
