@@ -25,7 +25,7 @@ int main( int argc, char **)
  //   HttpClient vote( "127.0.0.1",80);
     string reply;
     string res;
-    string message;
+    string* message;
      
 
     pthread_create(&pRead,NULL,ClientSocket::getLine,static_cast<void*>(message));
