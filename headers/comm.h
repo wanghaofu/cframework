@@ -4,7 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-#include <syswait.h>
+#include <sys/wait.h>
 struct message {
   int type;
   char data[1000];
