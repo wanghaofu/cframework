@@ -63,13 +63,13 @@ void ClientSocket::SendFile(const std::string& fileName)
     }
 
 }
-void readConsle(std::string* message)
+void ClientSocket::readConsle(std::string* message)
 {
 	pthread_t  pRead;
 	pthread_create(&pRead,NULL,getLine,static_cast<void*>(message));
 }
 
-void *getLine(void* arg)
+void *ClientSocket::getLine(void* arg)
 {
 	 //转化回来 
     std::string* message=static_cast<std::string*>(arg);
