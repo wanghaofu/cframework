@@ -27,7 +27,7 @@ int main( int argc, char **)
     string clientMessage;
     string* message;
      
-    ClientSocket::readConsle(message);
+    client_socket.readConsle(message);
     
 
     clientMessage = *message;

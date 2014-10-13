@@ -16,8 +16,9 @@ class ClientSocket : public Socket
     const ClientSocket& operator << ( const std::string& ) const;
     const ClientSocket& operator >> ( std::string&  ) const;
     void SendFile(const std::string& fileName);
-    static void readConsle(std::string*);
-   
+     void readConsle(std::string*);
+   private:
+    
     static void *getLine(void* arg);
 };
 
