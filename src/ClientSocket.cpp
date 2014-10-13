@@ -4,7 +4,7 @@
 #include "SocketException.h"
 #include "FileOperator.h"
 #include "comm.h"
-#include <pthread.h>
+
 
 
 ClientSocket::ClientSocket ( std::string host, int port )
