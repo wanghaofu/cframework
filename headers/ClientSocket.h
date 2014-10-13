@@ -18,7 +18,7 @@ class ClientSocket : public Socket
     void SendFile(const std::string& fileName);
 
 
-    static void *getLine(std::string& message);
+    static void *getLine(void* arg);
 };
 
 
