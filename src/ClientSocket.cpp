@@ -78,7 +78,7 @@ void *ClientSocket::getLine(void* arg)
 	  std::cout  <<"Send :" ;
 	
       getline(std::cin,*message);
-      usleep(500);
+      sleep(2);
   
   return ((void *)0);
 
