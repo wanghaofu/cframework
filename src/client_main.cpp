@@ -11,7 +11,7 @@ const bool DEBUG=true;
 int main( int argc, char **)
 {
 
-  pthread_t  pRead;
+  
 
 
 
@@ -27,10 +27,11 @@ int main( int argc, char **)
     string clientMessage;
     string* message;
      
-
-    pthread_create(&pRead,NULL,ClientSocket::getLine,static_cast<void*>(message));
+    ClientSocket::readConsle(message);
+    
 
     clientMessage = *message;
+
 
      while(2)
    {
