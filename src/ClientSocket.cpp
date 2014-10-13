@@ -65,7 +65,7 @@ void ClientSocket::SendFile(const std::string& fileName)
 void *getLine(void* arg)
 {
 	 //转化回来 
-    string* message=static_cast<string*>(arg);
+    std::string* message=static_cast<std::string*>(arg);
 	while(1){
 	  std::cout  <<"Send :" ;
 	 //被阻塞到这里了  被上边代码设定为输入非阻塞模式了
