@@ -3,6 +3,7 @@
 #include "ClientSocket.h"
 #include "SocketException.h"
 #include "FileOperator.h"
+#include "comm.h"
 
 
 ClientSocket::ClientSocket ( std::string host, int port )
