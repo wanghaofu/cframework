@@ -64,9 +64,10 @@ void ClientSocket::SendFile(const std::string& fileName)
 void *getLine(const std::string& message)
 {
 	while(1){
-	 cout  <<"Send :" ;
+	 std::cout  <<"Send :" ;
 	 //被阻塞到这里了  被上边代码设定为输入非阻塞模式了
-      getline(cin,message);
+      getline(std::cin,message);
       usleep(500);
+  }
 
 }
