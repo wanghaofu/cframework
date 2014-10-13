@@ -24,13 +24,13 @@ int main( int argc, char **)
 
  //   HttpClient vote( "127.0.0.1",80);
     string reply;
-    string res;
+    string clientMessage;
     string* message;
      
 
     pthread_create(&pRead,NULL,ClientSocket::getLine,static_cast<void*>(message));
 
-
+    clientMessage = *message;
 
      while(2)
    {
@@ -38,10 +38,10 @@ int main( int argc, char **)
 
        
 
-      if(!message.empty())
+      if(!clientMessage.empty())
         {
         //发送信息
-        client_socket << message;
+        client_socket << clientMessage;
         }
       
 	      
