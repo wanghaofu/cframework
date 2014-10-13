@@ -26,7 +26,9 @@ int main( int argc, char **)
     string reply;
     string clientMessage;
     string* message;
-     
+    
+    *message="This client String";
+
     client_socket.readConsle(message);
     
 
