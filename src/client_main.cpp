@@ -11,19 +11,32 @@ const bool DEBUG=true;
 int main( int argc, char **)
 {
 
+  pthread_t  pRead;
+
+
+
   try
   {
+    //设置输入设备为非阻塞模式
+       fcntl( 0, F_SETFL, O_NONBLOCK);  //注意一下这个方法 第一个参数！
+
        ClientSocket client_socket ( "localhost", 30000 );
 
  //   HttpClient vote( "127.0.0.1",80);
     string reply;
     string res;
     string message;
+     
+
+    pthread_create(pRread,NULL,ClientSocket::getLine,NULL);
+
+
+
      while(2)
    {
-      cout  <<"Send :" ;
+     
 
-      getline(cin,message);
+       
 
       if(!message.empty())
         {
