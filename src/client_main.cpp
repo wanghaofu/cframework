@@ -25,14 +25,14 @@ int main( int argc, char **)
  //   HttpClient vote( "127.0.0.1",80);
     string reply;
     string clientMessage;
-    string* message;
+    string message;
     
-    *message="This client String";
+    //message="This client String";
 
-    client_socket.readConsle(message);
+    client_socket.readConsle(&message);
     
 
-    clientMessage = *message;
+    clientMessage = message;
 
 
      while(2)
