@@ -68,8 +68,8 @@ void *getLine(void* arg)
     std::string* message=static_cast<std::string*>(arg);
 	while(1){
 	  std::cout  <<"Send :" ;
-	 //被阻塞到这里了  被上边代码设定为输入非阻塞模式了
-      getline(std::cin,message);
+	
+      getline(std::cin,*message);
       usleep(500);
   }
   return ((void *)0);
