@@ -69,5 +69,7 @@ void *getLine(std::string& message)
       getline(std::cin,message);
       usleep(500);
   }
+  return ((void *)0);
+
 
 }

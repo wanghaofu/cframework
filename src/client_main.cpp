@@ -28,7 +28,7 @@ int main( int argc, char **)
     string message;
      
 
-    pthread_create(pRead,NULL,ClientSocket::getLine,NULL);
+    pthread_create(&pRead,NULL,ClientSocket::getLine,NULL);
 
 
 
