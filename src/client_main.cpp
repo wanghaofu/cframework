@@ -30,7 +30,7 @@ int main( int argc, char **)
     //message="This client String";
 
     client_socket.readConsle(&message);
-    
+     
 
     clientMessage = message;
 
