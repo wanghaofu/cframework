@@ -53,7 +53,7 @@ int main( int argc, char **)
 	      std::cout << "Server: " << reply << endl;
         }
        
-        if( message == "quit")
+        if( clientMessage == "quit")
         {
   	      cout << "I will quit Bye!" << endl;
   	      return 0;
