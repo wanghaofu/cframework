@@ -61,7 +61,7 @@ void ClientSocket::SendFile(const std::string& fileName)
     }
 
 }
-void *getLine(const std::string& message)
+void *getLine(std::string& message)
 {
 	while(1){
 	 std::cout  <<"Send :" ;
