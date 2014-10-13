@@ -18,7 +18,7 @@ int main( int argc, char **)
   try
   {
     //设置输入设备为非阻塞模式
-       fcntl( 0, F_SETFL, O_NONBLOCK);  //注意一下这个方法 第一个参数！
+      // fcntl( 0, F_SETFL, O_NONBLOCK);  //注意一下这个方法 第一个参数！
 
        ClientSocket client_socket ( "localhost", 30000 );
 
@@ -28,7 +28,7 @@ int main( int argc, char **)
     string message;
      
 
-    pthread_create(pRread,NULL,ClientSocket::getLine,NULL);
+    pthread_create(pRead,NULL,ClientSocket::getLine,NULL);
 
 
 
