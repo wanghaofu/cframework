@@ -44,7 +44,7 @@ EpollServerSocket::~EpollServerSocket()
 void EpollServerSocket::run()
 {
     //add listener socketfd to epoll 监听套接字描述符
-    if(epoll.Add(Socket::getSocketfd(),EPOLLIN)==false)
+    if(epoll.Add(Socket::getSocketfd(),EPOLLIN)==false) //添加一链接描述符号
         return;
 
     int i;
