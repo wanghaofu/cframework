@@ -119,6 +119,7 @@ void *view(void *arg)
 
     client->lock.condLock();
 
+<<<<<<< HEAD
     if (client->message.empty() && client->reply.empty())
     {
         client->lock.condWait();
@@ -128,6 +129,19 @@ void *view(void *arg)
         cout << "send: " << client->message << endl;
     }
     if ( ture == !client->reply.empty() )
+=======
+    bool ms = client->message.empty();
+    bool rs = client->reply.empty();
+    if (ms && rs)
+    {
+        client->lock.condWait();
+    }
+    if ( true == !ms )
+    {
+        cout << "send: " << client->message << endl;
+    }
+    if ( ture == !rs )
+>>>>>>> 80d7dd36c4c65f49a0b7c167b6d4efdbdd4b9c6e
     {
         cout << "recv: " << client->reply << end;
     }

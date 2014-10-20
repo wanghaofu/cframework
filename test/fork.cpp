@@ -5,9 +5,12 @@
 //fork lib
 #include <unistd.h>
 #include <sys/types.h>
+<<<<<<< HEAD
 // signal 
 #include <signal.h>
 
+=======
+>>>>>>> 80d7dd36c4c65f49a0b7c167b6d4efdbdd4b9c6e
 using namespace std;
 int main()
 {
