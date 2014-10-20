@@ -3,26 +3,26 @@
 #include <stdlib.h>
 
 Epoll::Epoll()
-:fdNumber(0)
+    : fdNumber(0)
 {
     //set resource limits respectively
-    rt.rlim_max=rt.rlim_cur=MAXEPOLLSIZE;
-    if(::setrlimit(RLIMIT_NOFILE, &rt) == -1)
+    rt.rlim_max = rt.rlim_cur = MAXEPOLLSIZE;
+    if (::setrlimit(RLIMIT_NOFILE, &rt) == -1)
     {
         perror("setrlimit");
         exit(1);
     }
     //create epoll
-    epollfd=epoll_create(MAXEPOLLSIZE);
+    epollfd = epoll_create(MAXEPOLLSIZE);
 }
 
-bool Epoll::Add(int fd,int eventsOption)
+bool Epoll::Add(int fd, int eventsOption)
 {
     //handle readable event,set Edge Triggered
-    event.events=eventsOption;//EPOLLIN | EPOLLET;
-    event.data.fd=fd;
+    event.events = eventsOption; //EPOLLIN | EPOLLET;
+    event.data.fd = fd;
 
-    if(epoll_ctl(epollfd,EPOLL_CTL_ADD,fd,&event)<0)
+    if (epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event) < 0)
         return false;
 
     fdNumber++;
@@ -31,8 +31,8 @@ bool Epoll::Add(int fd,int eventsOption)
 
 bool Epoll::Delete(const int eventIndex)
 {
-    if(epoll_ctl(epollfd,EPOLL_CTL_DEL,
-                 events[eventIndex].data.fd,&event)<0)
+    if (epoll_ctl(epollfd, EPOLL_CTL_DEL,
+                  events[eventIndex].data.fd, &event) < 0)
         return false;
     fdNumber--;
     return true;
@@ -41,8 +41,8 @@ bool Epoll::Delete(const int eventIndex)
 int Epoll::Wait()
 {
     int eventNumber;
-    eventNumber=epoll_wait(epollfd,events,fdNumber,-1);
-    if(eventNumber<0)
+    eventNumber = epoll_wait(epollfd, events, fdNumber, -1);
+    if (eventNumber < 0)
     {
         perror("epoll_wait");
         exit(1);

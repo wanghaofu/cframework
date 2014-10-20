@@ -22,10 +22,11 @@ class ServerSocket : public Socket
 		const ServerSocket& operator << ( const std::string& ) const;
 		const ServerSocket& operator >> ( std::string& ) const;
 
-        void accept(Socket& socket);
+        bool accept(Socket& socket);
 		      
 		void run();
 		void RecvFile(Socket* clientSocket);
+
 
 	private:
 		

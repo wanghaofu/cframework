@@ -2,10 +2,10 @@
 #include <sys/sendfile.h>
 #include <memory.h>
 
-const int MAX_BUFFERLENGTH=512;
+const int MAX_BUFFERLENGTH = 512;
 
 FileOperator::FileOperator()
-:filePtr(NULL)
+    : filePtr(NULL)
 {}
 
 FileOperator::~FileOperator()
@@ -13,51 +13,51 @@ FileOperator::~FileOperator()
     Close();
 }
 
-bool FileOperator::Open(const char* fileName,const char* option)
+bool FileOperator::Open(const char *fileName, const char *option)
 {
-    filePtr=fopen(fileName,option);
-    return filePtr!=NULL;
+    filePtr = fopen(fileName, option);
+    return filePtr != NULL;
 }
 
 
-int FileOperator::WriteToFile(const std::string& buffer)
+int FileOperator::WriteToFile(const std::string &buffer)
 {
-    int writeBytes=::fwrite(buffer.c_str(),sizeof(char),buffer.size(),filePtr);
+    int writeBytes =::fwrite(buffer.c_str(), sizeof(char), buffer.size(), filePtr);
 
-    if(writeBytes<0)
+    if (writeBytes < 0)
     {
         perror("error from fwrite");
         return -1;
     }
-    else if(writeBytes==0)
-            return 0;
+    else if (writeBytes == 0)
+        return 0;
     else
         return writeBytes;
 }
 
-int FileOperator::ReadFromFile(std::string& buffer)
+int FileOperator::ReadFromFile(std::string &buffer)
 {
-    char bufferArray[MAX_BUFFERLENGTH+1];
+    char bufferArray[MAX_BUFFERLENGTH + 1];
     buffer.clear();
-    memset(bufferArray,0,MAX_BUFFERLENGTH+1);
+    memset(bufferArray, 0, MAX_BUFFERLENGTH + 1);
 
-    int numberRead=fread(bufferArray,sizeof(char),MAX_BUFFERLENGTH+1,filePtr);
-    if(numberRead==-1)
+    int numberRead = fread(bufferArray, sizeof(char), MAX_BUFFERLENGTH + 1, filePtr);
+    if (numberRead == -1)
     {
         perror("error in Socket::Receive");
         return -1;
     }
-    else if(numberRead==0)
+    else if (numberRead == 0)
         return 0;
     else
     {
-        buffer=bufferArray;
+        buffer = bufferArray;
         return numberRead;
     }
 }
 
 void FileOperator::Close()
 {
-    if(filePtr!=NULL)
+    if (filePtr != NULL)
         fclose(filePtr);
 }

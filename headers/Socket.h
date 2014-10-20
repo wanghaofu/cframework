@@ -19,47 +19,50 @@ const int MAXRECV = 500000;
 
 class Socket
 {
-	public:
-		Socket();
-		virtual ~Socket();
+public:
+    Socket();
+    virtual ~Socket();
 
-		// Server initialization
-		bool create();
-		bool bind ( const int port );
-		bool listen() const;
-		bool accept ( Socket& ) const;
+    // Server initialization
+    bool create();
+    bool bind ( const int port );
+    bool listen() const;
+    bool accept ( Socket &) const;
 
-		// Client initialization
-		bool connect ( const std::string host, const int port );
+    // Client initialization
+    bool connect ( const std::string host, const int port );
 
-		// Data Transimission
-		bool send ( const std::string ) const;
-		int recv ( std::string& ) const;
+    // Data Transimission
+    bool send ( const std::string ) const;
+    int recv ( std::string &) const;
 
-        //!!! change
-        bool send(Socket& socket,const std::string& message) const;
-		int receive(Socket& socket,std::string& message)const;
+    //!!! change
+    bool send(Socket &socket, const std::string &message) const;
+    int receive(Socket &socket, std::string &message)const;
 
 
-		void set_non_blocking ( const bool );
+    void set_non_blocking ( const bool );
 
-		bool is_valid() const { return m_sock != -1; }
-		int getSocketfd();
-		void erase(int sockfd);
+    bool is_valid() const
+    {
+        return m_sock != -1;
+    }
+    int getSocketfd();
+    void erase(int sockfd);
 
-		int getPort();
-		std::string getAddress();
+    int getPort();
+    std::string getAddress();
 
-		int port;
+    int port;
 
-	private:
+private:
 
-		int m_sock;
-		
+    int m_sock;
 
-		std::string address;
 
-		sockaddr_in m_addr;
+    std::string address;
+
+    sockaddr_in m_addr;
 };
 
 
