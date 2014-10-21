@@ -90,7 +90,7 @@ bool Socket::accept ( Socket &new_socket ) const
     int addr_length = sizeof ( m_addr );
     //m_sock 服务端listen连接符
     //new_socket.m_sock 一链接符！ 这里只有一个？！
-    new_socket.m_sock = ::accept ( m_sock, ( sockaddr *) &m_addr, ( socklen_t *) &addr_length );   //创建一个新的以连接资源
+    new_socket.m_sock = ::accept ( m_sock, ( sockaddr *) &new_socket.m_addr, ( socklen_t *) &addr_length );   //创建一个新的以连接资源
 
     if ( new_socket.m_sock <= 0 )
         return false;
@@ -221,10 +221,11 @@ int Socket::getSocketfd()
 
 int Socket::getPort()
 {
-    return port = ntohs(m_addr.sin_port);
+    port = ntohs(m_addr.sin_port);
+    return port;
 }
 
-std::string Socket::getAddress()
+string Socket::getAddress()
 {
     char *ip;
     std::string Sip;

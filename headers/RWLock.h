@@ -1,3 +1,5 @@
+#ifndef RWLOCK
+#define RWLOCK
 #include <string>
 #include "comm.h"
 
@@ -24,3 +26,4 @@ private:
     pthread_cond_t icondLock;
     //    int rd_cnt, wr_cnt;
 };
+#endif

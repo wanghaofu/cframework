@@ -10,7 +10,7 @@
 #include <string>
 #include <list>
 #include <semaphore.h>
-
+#include "EpollServerSocket.h"
 using namespace std;
 
 
@@ -58,15 +58,27 @@ void mutileServer()
 
 void epollMutileServer()
 {
-
+    try
+    {
+        EpollServerSocket server(30000);
+        server.run();
+    }
+    catch (SocketException &e)
+    {
+        cout << "Exception was caught:" << e.description() << "\nExiting.\n";
+    }
 }
 
 int main ( int argc, char **)
 {
 
+ //fork init daemon mode
+
+  //daemonize::runDaemon();
     cout << "Running server ..." << endl;
     // signServer();
-    mutileServer();
+    //  mutileServer();
+    epollMutileServer();
     return 0;
 
     /** cout<<"Running server..."<<endl;

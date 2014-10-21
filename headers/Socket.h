@@ -9,12 +9,11 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <string>
 #include <arpa/inet.h>
-//#include "comm.h"
+#include "comm.h"
 
 const int MAXHOSTNAME = 200;
-const int MAXCONNECTIONS = 5;
+const int MAXCONNECTIONS = 400000;
 const int MAXRECV = 500000;
 
 class Socket
@@ -53,14 +52,15 @@ public:
     int getPort();
     std::string getAddress();
 
-    int port;
+   
 
 private:
 
     int m_sock;
 
 
-    std::string address;
+    string address;
+    int port;
 
     sockaddr_in m_addr;
 };

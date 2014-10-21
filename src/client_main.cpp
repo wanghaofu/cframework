@@ -17,6 +17,7 @@ pthread_mutex_t *mute;
 //int main ( int argc, int argv[] )
 int main( int argc, char **)
 {
+ 
 
     try
     {
@@ -24,7 +25,7 @@ int main( int argc, char **)
         // fcntl( 0, F_SETFL, O_NONBLOCK);  //注意一下这个方法 第一个参数！
         ClientSocket client_socket ( "localhost", 30000 );
         //   HttpClient vote( "127.0.0.1",80);
-        string reply;
+      //  string reply;
 
         //message="This client String";
 

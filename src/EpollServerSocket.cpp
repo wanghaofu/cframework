@@ -10,30 +10,30 @@
 **/
 EpollServerSocket::EpollServerSocket(const int port)
 {
-      if ( ! Socket::create() )
-        {
-          throw SocketException ( "Could not create server socket." );
-        }
+    if ( ! Socket::create() )
+    {
+        throw SocketException ( "Could not create server socket." );
+    }
 
-      if ( ! Socket::bind ( port ) )
-        {
-          throw SocketException ( "Could not bind to port." );
-        }
+    if ( ! Socket::bind ( port ) )
+    {
+        throw SocketException ( "Could not bind to port." );
+    }
 
-      if ( ! Socket::listen() )
-        {
-          throw SocketException ( "Could not listen to socket." );
-        }
+    if ( ! Socket::listen() )
+    {
+        throw SocketException ( "Could not listen to socket." );
+    }
 
-      //set listener socket non-blocking!!
-      Socket::set_non_blocking(true);
+    //set listener socket non-blocking!!
+    Socket::set_non_blocking(true);
 
 }
 
 EpollServerSocket::~EpollServerSocket()
 {
-    std::map<int,Socket*>::iterator it;
-    for(it=clientSockets.begin();it!=clientSockets.end();it++)
+    std::map<int, Socket *>::iterator it;
+    for (it = clientSockets.begin(); it != clientSockets.end(); it++)
         delete it->second;
 }
 /**
@@ -44,49 +44,68 @@ EpollServerSocket::~EpollServerSocket()
 void EpollServerSocket::run()
 {
     //add listener socketfd to epoll 监听套接字描述符
-    if(epoll.Add(Socket::getSocketfd(),EPOLLIN)==false) //添加一链接描述符号
+    if (epoll.Add(Socket::getSocketfd(), EPOLLIN) == false) //添加一链接描述符号
         return;
 
     int i;
     int eventNumber;
-    Socket* clientSocket; //定义已连接变量
-
-    while(true)
+    Socket *clientSocket; //定义已连接变量
+   // struct epoll_event ev;
+    while (true)
     {
-        eventNumber=epoll.Wait();
+        eventNumber = epoll.Wait();
 
-        #ifdef DEBUG
-            std::cout<<"eventNumbers: "<<eventNumber<<" ";
+#ifdef DEBUG
+        std::cout << "eventNumbers: " << eventNumber << " ";
         #endif
 
-        for(i=0;i<eventNumber;i++ )
+        for (i = 0; i < eventNumber; i++ )
         {
-             if ((epoll.GetEvents(i) & EPOLLERR) ||
-                 (epoll.GetEvents(i) & EPOLLHUP) ||
-                 (!(epoll.GetEvents(i) & EPOLLIN)))
+            #ifdef DEBUG
+            cout << "event [" << i <<"]: " << epoll.GetEvents(i) << endl;
+            #endif
+
+            if ((epoll.GetEvents(i) & EPOLLERR) ||
+                    (epoll.GetEvents(i) & EPOLLHUP) ||
+                    (!(epoll.GetEvents(i) & EPOLLIN)))
             {
-                      /* An error has occured on this fd, or the socket is not
-                         ready for reading (why were we notified then?) */
-                      perror ("epoll error\n");
-                      deleteClient(epoll.GetEventOccurfd(i));
-                      continue;
+                /* An error has occured on this fd, or the socket is not
+                   ready for reading (why were we notified then?) */
+                perror ("epoll error\n");
+                deleteClient(epoll.GetEventOccurfd(i));
+                continue;
             }
 
             //if event is triggered by listener socket what is this
-            else if(epoll.GetEventOccurfd(i)==Socket::getSocketfd())
+            else if (epoll.GetEventOccurfd(i) == Socket::getSocketfd())
             {
-                clientSocket=new Socket();
-                if(addNewClient(*clientSocket)==false)
+                clientSocket = new Socket();
+                if (addNewClient(*clientSocket) == false)
                     return;
-                //获取链接！ ？ why 一个单独的socket来 负责一个客户！ 
-                clientSockets[clientSocket->getSocketfd()]=clientSocket;
-
+                //获取链接！ ？ why 一个单独的socket来 负责一个客户！//将连接保存入map 通过与监听连接付比较来确认是不是新的连接，如果是监听连接付的输入则说明时新的连接 
+                clientSockets[clientSocket->getSocketfd()] = clientSocket;
             }
             //else event is triggered by client sockets
-            else
+            else if (epoll.GetEvents(i) & EPOLLIN )
             {
-                clientSocket=clientSockets[epoll.GetEventOccurfd(i)];
+                clientSocket = clientSockets[epoll.GetEventOccurfd(i)];
+
+                // this must change
+                /*ev.data.ptr= md;
+                ev.events=EPOLLOUT|EPOLLET;
+                epoll_ctl(epfd,EPOLL_CTL_MOD,sockfd,&ev); //change the tag,wait next loop send data
+                */
                 processMessage(*clientSocket);
+            }
+            else if (epoll.GetEvents(i) & EPOLLOUT) //wait send data
+            {
+                /**struct myepoll_data* md=(myepoll_data*)events[i].data.ptr; //get data
+                sockfd= md->fd;
+                send(sockfd,md->ptr,strlen((char*)md->ptr),0); // send data
+                ev.data.fd=sockfd;
+                ev.events=EPOLLIN|EPOLLET;
+                epoll_ctl(epfd,EPOLL_CTL_MOD,sockfd,&ev); //modift tag ,wait next loop
+                **/
             }
         }
     }
@@ -96,14 +115,14 @@ void EpollServerSocket::run()
 ?? 用成员方法发送信息
 ！clientSockets! 是哪里来的！ 传递过来的某一个用户连接！ 这个是针对多个用户的所以保持了多个连接
 **/
-void EpollServerSocket::processMessage(Socket& clientSocket)
+void EpollServerSocket::processMessage(Socket &clientSocket)
 {
     std::string message;
-    receiveMessage(clientSocket,message);
+    receiveMessage(clientSocket, message);
 
-    if(message=="exit")
+    if (message == "exit")
     {
-        sendMessage(clientSocket,"user_exit");
+        sendMessage(clientSocket, "user_exit");
 
         deleteClient(clientSocket.getSocketfd());
     }
@@ -111,26 +130,45 @@ void EpollServerSocket::processMessage(Socket& clientSocket)
     {
         //可以发送给单个用户！ 这个以来与信息包的进一步扩展。client list 进行重构
         sendToAllUsers(message);
-    }  
+    }
 }
-
+//向所有连接发送信息
+void EpollServerSocket::sendToAllUsers(const std::string &message) const
+{
+    std::map<int, Socket *>::const_iterator it;
+    Socket* clientConn;
+    string imessage,address,tstr;
+    int port;
+    cout << "send to [" << clientSockets.size() << "] num user:" << endl; 
+    for (it = clientSockets.begin(); it != clientSockets.end(); it++)
+    {
+        clientConn = it->second;
+        address = clientConn->getAddress();
+        port= clientConn->getPort();
+        tstr= message;
+        cout << it->first << " " << address <<"  "<< port << " " << message<< endl;
+      //  imessage="Address: " + address + "Port" + port + message;
+       // sprintf(imessage,"Address: %s Port %d %s",address.c_str(),port,tstr.c_str());
+        sendMessage(*clientConn, message);
+    }
+}
 /**
 将连接加入epoll  events 列表
 **/
-bool EpollServerSocket::addNewClient(Socket& clientSocket)
+bool EpollServerSocket::addNewClient(Socket &clientSocket)
 {
-    if(Socket::accept(clientSocket)==false)
+    if (Socket::accept(clientSocket) == false)
         return false;
 
     //set socket non-blocking!!
     clientSocket.set_non_blocking(true);
 
-    if(epoll.Add(clientSocket.getSocketfd(),EPOLLIN | EPOLLET)==false)
+    if (epoll.Add(clientSocket.getSocketfd(), EPOLLIN | EPOLLET) == false)
         return false;
 
-    #ifdef DEBUG
-        std::cout<<"New user...\n";
-    #endif
+#ifdef DEBUG
+    std::cout << "New user...\n";
+#endif
 
     return true;
 }
@@ -145,30 +183,24 @@ void EpollServerSocket::deleteClient(int sockfd)
     epoll.Delete(sockfd);
 
     delete clientSockets[sockfd];
-    
+
     clientSockets.erase(sockfd); //定义erase没有声明
 }
-//向所有连接发送信息
-void EpollServerSocket::sendToAllUsers(const std::string& message) const
-{
-    std::map<int,Socket*>::const_iterator it;
-    for(it=clientSockets.begin();it!=clientSockets.end();it++)
-        sendMessage(*(it->second),message);
-}
+
 //发送信息ReceiveMessage
-void EpollServerSocket::sendMessage(Socket& clientSocket,const std::string& message) const
+void EpollServerSocket::sendMessage(Socket &clientSocket, const std::string &message) const
 {
-    while(true)
+    while (true)
     {
-        if(Socket::send(clientSocket,message)==false)
+        if (Socket::send(clientSocket, message) == false)
         {
             //this means the socket can be wrote
-            if(errno == EINTR)
+            if (errno == EINTR)
                 return;
 
             //this means the cache queue is full,
             //sleep 1 second and send again
-            if(errno==EAGAIN)
+            if (errno == EAGAIN)
             {
                 sleep(1);
                 continue;
@@ -179,19 +211,19 @@ void EpollServerSocket::sendMessage(Socket& clientSocket,const std::string& mess
     }
 }
 /**
-接受信息！？ 
+接受信息！？
 clientSocket ?! 接受某个特定链接的信息
 message  具体的信息体
 
 **/
-void EpollServerSocket::receiveMessage(Socket& clientSocket,std::string& message)
+void EpollServerSocket::receiveMessage(Socket &clientSocket, std::string &message)
 {
-    bool done=true;
+    bool done = true;
 
-    while(done)
+    while (done)
     {
-        int receiveNumber=Socket::receive(clientSocket,message); //调用父类的发送方法给接受该连接的信息到message
-        if(receiveNumber==-1)
+        int receiveNumber = Socket::receive(clientSocket, message); //调用父类的发送方法给接受该连接的信息到message
+        if (receiveNumber == -1)
         {
             //if errno == EAGAIN, that means we have read all data.
             if (errno != EAGAIN)
@@ -201,7 +233,7 @@ void EpollServerSocket::receiveMessage(Socket& clientSocket,std::string& message
             }
             return;
         }
-        else if(receiveNumber==0)
+        else if (receiveNumber == 0)
         {
             // End of file. The remote has closed the connection.
             deleteClient(clientSocket.getSocketfd());
@@ -209,9 +241,9 @@ void EpollServerSocket::receiveMessage(Socket& clientSocket,std::string& message
 
         //if receiveNumber is equal to MAXRECEIVE,
         //maybe there is data still in cache,so it has to read again
-        if(receiveNumber==MAXRECV)
-            done=true;
+        if (receiveNumber == MAXRECV)
+            done = true;
         else
-            done=false;
+            done = false;
     }
 }

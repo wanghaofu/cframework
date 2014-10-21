@@ -48,7 +48,7 @@ void daemonize(const char *cmd)
 
     fd0 = open("/dev/null", O_RDWR);
     fd1 = dup(0);
-    fd2 = dup(0;
+    fd2 = dup(0);
               openlog(cmd, LOG_CONS, LOG_DAEMON);
 
               if (fd0 != 0 || fd1 != 1 || fd2 != 2 )

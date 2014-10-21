@@ -50,7 +50,7 @@ void ClientSocket::SendFile(const std::string &fileName)
 {
     FileOperator fileOperator;
     fileOperator.Open(fileName.c_str(), "rb");
-    std::string buffer;
+    string buffer;
 
     int readBytes;
     send("File");
@@ -113,39 +113,34 @@ void *ClientSocket::sendMessage(void *arg)
 
 }
 
-void *view(void *arg)
+void *ClientSocket::view(void *arg)
 {
+    return ((void *)0);
     ClientSocket *client = static_cast<ClientSocket *>(arg);
 
-    client->lock.condLock();
+    // client->lock.condLock();
 
-<<<<<<< HEAD
-    if (client->message.empty() && client->reply.empty())
+    while (1)
     {
-        client->lock.condWait();
+        if (client->message.empty() && client->reply.empty())
+        {
+             sleep(1);
+            //  client->lock.condWait();
+        }
+        // if ( true == !client->message.empty() )
+        // {
+        //     cout << "send: " << client->message << endl;
+        //     client->message= "";
+        // }
+        // if ( true == !client->reply.empty() )
+        // {
+        //     cout << "recv: " << client->reply << endl;
+        //     client->reply="";
+        // }
+        sleep(1);
     }
-    if ( true == !client->message.empty() )
-    {
-        cout << "send: " << client->message << endl;
-    }
-    if ( ture == !client->reply.empty() )
-=======
-    bool ms = client->message.empty();
-    bool rs = client->reply.empty();
-    if (ms && rs)
-    {
-        client->lock.condWait();
-    }
-    if ( true == !ms )
-    {
-        cout << "send: " << client->message << endl;
-    }
-    if ( ture == !rs )
->>>>>>> 80d7dd36c4c65f49a0b7c167b6d4efdbdd4b9c6e
-    {
-        cout << "recv: " << client->reply << end;
-    }
-    client->lock.condUnLock();
+    //  client->lock.condUnLock();
+    return ((void *)0);
 }
 
 
@@ -157,9 +152,11 @@ void *ClientSocket::getLine(void *arg)
     {
         //  cout << "send: " ;
         getline(std::cin, client->message);
+
         if ( !client->message.empty() )
         {
-            client->lock.condSignal();
+ cout << "send: " << client->message << endl;
+            //client->lock.condSignal();
         }
         //client->message="hello";
 
@@ -185,7 +182,7 @@ void *ClientSocket::iRecv(void *arg)
         // }
         if ( !client->reply.empty())
         {
-            client->lock.condSignal();
+             cout << "recv: " << client->reply << endl;
         }
         //  client->lock.unLock();
         sleep(1);
